@@ -178,6 +178,28 @@
   .dbt-in:focus{outline:none;border-color:#a5b4fc;background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.13)}
   .dbt-in.rate{min-width:56px}
 
+  /* ---------- инвестиции ---------- */
+  .inv-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin:18px 0 8px}
+  .inv-h .btn{padding:6px 11px;font-size:12px;text-transform:none;letter-spacing:0}
+  .tbl.inv{font-size:12.5px}
+  .tbl.inv th{padding:6px 5px;font-size:10.5px}
+  .tbl.inv td{padding:3px 4px}
+  .inv-in{width:100%;min-width:56px;border:1px solid transparent;background:transparent;border-radius:7px;padding:6px 5px;font:inherit;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+  .inv-in:hover{background:#f7f9fe}
+  .inv-in:focus{outline:none;border-color:#a5b4fc;background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.13)}
+  .inv-in.inv-name{text-align:left;font-weight:600;min-width:132px}
+  .inv-in.inv-ticker{text-align:left;min-width:72px;text-transform:uppercase;letter-spacing:.03em;font-weight:600;color:#4338ca}
+  .inv-in.inv-date{min-width:126px;text-align:left;font-size:12px}
+  .inv-in.inv-every{min-width:70px;text-align:left}
+  .inv-val{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .inv-empty{padding:10px 2px;font-size:12.5px;color:var(--muted)}
+  .pays{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .pay{display:flex;align-items:center;gap:10px;background:#fbfcff;border:1px solid var(--line);border-radius:11px;padding:9px 12px;font-size:12.5px}
+  .pay-date{flex:0 0 54px;font-weight:700;color:#4338ca;font-variant-numeric:tabular-nums}
+  .pay-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pay-amt{font-weight:700;color:var(--green);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .pay-when{color:var(--muted);font-size:11.5px;white-space:nowrap}
+
   /* ---------- журнал операций ---------- */
   .op-actions{display:flex;gap:8px;flex-wrap:wrap}
   .btn.green{background:#0f9d58;border-color:#0f9d58;color:#fff;box-shadow:0 10px 20px -12px rgba(15,157,88,.8)}
@@ -347,7 +369,7 @@
   </header>
 
   <div class="banner no-print">
-    <div><b>Это пример с демо-цифрами.</b> Записывайте доходы и траты кнопками «+ Поступление» и «− Трата» или впишите суммы в «Ввод данных» — все расчёты, графики и недельный разрез обновятся сами. Данные сохраняются в браузере, а при подключённой синхронизации — ещё и в облаке.</div>
+    <div>Данные хранятся в этом браузере, а при подключённой синхронизации — в облаке.</div>
     <div class="banner-actions">
       <button class="btn ghost sync-badge" id="syncBtn" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.2 9.5 4 4 0 0 0 7 17.5"/><path d="m9 13 3-3 3 3"/><path d="M12 10v8"/></svg>
@@ -436,6 +458,24 @@
         <div class="hint" style="margin-top:10px" id="debtNote"></div>
       </div>
     </div>
+  </section>
+
+  <section class="card" id="invCard" style="margin-top:16px">
+    <div class="card-head">
+      <h2>Инвестиции</h2>
+      <div class="op-actions no-print">
+        <span class="hint" id="invUpdated"></span>
+        <button class="btn" id="invRefresh" type="button">Обновить с MOEX</button>
+      </div>
+    </div>
+    <div class="netstrip" id="invStrip"></div>
+    <div class="inv-h"><span>Акции и фонды</span><button class="btn no-print" id="addStock" type="button">+ Акция или фонд</button></div>
+    <div class="scroll"><div id="invStocks"></div></div>
+    <div class="inv-h"><span>Облигации</span><button class="btn no-print" id="addBond" type="button">+ Облигация</button></div>
+    <div class="scroll"><div id="invBonds"></div></div>
+    <div class="inv-h"><span>Ближайшие выплаты по купонам</span></div>
+    <div class="pays" id="invCalendar"></div>
+    <div class="hint" style="margin-top:10px">Тикер — как на Московской бирже: SBER, LKOH, SU26238RMFS4. «Обновить с MOEX» подтянет последнюю цену акций и ближайший купон облигаций. Без интернета цены можно ввести вручную.</div>
   </section>
 
   <section class="card no-print" style="margin-top:16px">
@@ -624,7 +664,9 @@ function demoState() {
       { name: 'Отпуск',              target: 180000, saved: 64000 },
       { name: 'Новый ноутбук',       target: 120000, saved: 35000 }
     ],
-    ops: []
+    ops: [],
+    investments: [],
+    invUpdatedAt: 0
   };
 }
 
@@ -686,6 +728,25 @@ function normalize(s) {
       };
     });
   }
+  if (Array.isArray(s.investments)) {
+    out.investments = s.investments.slice(0, 100).map((v, i) => {
+      const kind = v && v.kind === 'bond' ? 'bond' : 'stock';
+      const every = +((v && v.couponEvery) || 0);
+      return {
+        id: String((v && v.id) || ('inv' + (i + 1))),
+        kind,
+        name: String((v && v.name) || '').slice(0, 40),
+        ticker: String((v && v.ticker) || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 16),
+        qty: Math.max(0, Math.round(num(v && v.qty, 0) * 10000) / 10000),
+        buyPrice: Math.max(0, Math.round(num(v && v.buyPrice, 0) * 100) / 100),
+        price: Math.max(0, Math.round(num(v && v.price, 0) * 100) / 100),
+        coupon: Math.max(0, Math.round(num(v && v.coupon, 0) * 100) / 100),
+        couponDate: /^\d{4}-\d{2}-\d{2}$/.test(v && v.couponDate) ? v.couponDate : '',
+        couponEvery: [1, 3, 6, 12].indexOf(every) >= 0 ? every : (kind === 'bond' ? 6 : 0)
+      };
+    });
+  }
+  out.invUpdatedAt = Math.max(0, num(s.invUpdatedAt, 0));
   return out;
 }
 
@@ -1298,6 +1359,263 @@ function renderOps() {
   }
 }
 
+/* ---------- инвестиции ---------- */
+const r2 = n => Math.round(n * 100) / 100;
+const fmtPrice = n => String(r2(n)).replace('.', ',');
+const fmtQty = n => String(Math.round(n * 10000) / 10000).replace('.', ',');
+const signedPct = f => (f >= 0 ? '+' : '\u2212') + pct(Math.abs(f));
+const fmtProfit = v => Math.round(Math.abs(v)) < 1 ? fmtMoney(v) : signed(v);
+
+function isoOf(d) {
+  const p = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+
+function addMonthsISO(iso, n) {
+  const p = parseISO(iso);
+  const d = new Date(p.y, p.m + n, 1);
+  const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  return isoOf(new Date(d.getFullYear(), d.getMonth(), Math.min(p.d, last)));
+}
+
+function nextCouponDate(it) {
+  if (!it.couponDate || !(it.couponEvery > 0)) return '';
+  let d = it.couponDate;
+  const today = todayISO();
+  let guard = 0;
+  while (d < today && guard++ < 600) d = addMonthsISO(d, it.couponEvery);
+  return d;
+}
+
+function daysUntil(iso) {
+  const p = parseISO(iso);
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  const d = new Date(p.y, p.m, p.d);
+  return Math.round((d - t) / 86400000);
+}
+
+function whenText(days) {
+  if (days <= 0) return 'сегодня';
+  if (days === 1) return 'завтра';
+  return 'через ' + days + ' ' + plural(days, 'день', 'дня', 'дней');
+}
+
+function dayMonth(iso) {
+  const p = parseISO(iso);
+  return p.d + ' ' + MONTHS_SHORT[p.m];
+}
+
+function invTotals() {
+  let value = 0, cost = 0, coupons = 0;
+  state.investments.forEach(it => {
+    value += (it.qty || 0) * (it.price || 0);
+    cost += (it.qty || 0) * (it.buyPrice || 0);
+    if (it.kind === 'bond' && it.coupon > 0 && it.couponEvery > 0) {
+      coupons += it.coupon * it.qty * 12 / it.couponEvery;
+    }
+  });
+  return { value, cost, profit: value - cost, coupons };
+}
+
+function nearestCoupon() {
+  let best = null;
+  state.investments.forEach(it => {
+    if (it.kind !== 'bond') return;
+    const d = nextCouponDate(it);
+    if (d && (!best || d < best.d)) best = { d, amount: (it.coupon || 0) * (it.qty || 0), it };
+  });
+  return best;
+}
+
+function updateInvStrip() {
+  const strip = document.getElementById('invStrip');
+  if (!strip) return;
+  const t = invTotals();
+  const near = nearestCoupon();
+  const n = state.investments.length;
+  const ratio = t.cost > 0 ? t.profit / t.cost : 0;
+  strip.innerHTML =
+    '<div class="net"><div class="t">Стоимость портфеля</div><div class="v">' + fmtMoney(t.value) + '</div>' +
+      '<div class="s">' + n + ' ' + plural(n, 'бумага', 'бумаги', 'бумаг') + '</div></div>' +
+    '<div class="net"><div class="t">Вложено</div><div class="v">' + fmtMoney(t.cost) + '</div>' +
+      '<div class="s">по цене покупки</div></div>' +
+    '<div class="net ' + (t.cost > 0 ? (t.profit < 0 ? 'neg' : 'pos') : '') + '"><div class="t">Прибыль</div>' +
+      '<div class="v">' + (t.cost > 0 ? fmtProfit(t.profit) : fmtMoney(0)) + '</div>' +
+      '<div class="s">' + (t.cost > 0 ? signedPct(ratio) + ' к вложенному' : 'нет данных') + '</div></div>' +
+    '<div class="net ' + (t.coupons > 0 ? 'pos' : '') + '"><div class="t">Купоны за год</div>' +
+      '<div class="v">' + fmtMoney(t.coupons) + '</div>' +
+      '<div class="s">' + (near ? 'ближайший ' + dayMonth(near.d) + ' · ' + fmtMoney(near.amount) : 'по облигациям') + '</div></div>';
+}
+
+function invInput(i, f, val, cls, extra) {
+  return '<input class="inv-in ' + (cls || '') + '" data-ii="' + i + '" data-if="' + f + '" ' + (extra || '') +
+    ' value="' + esc(val) + '" autocomplete="off" spellcheck="false">';
+}
+
+function profitCell(i, it) {
+  const pf = (it.qty || 0) * ((it.price || 0) - (it.buyPrice || 0));
+  return '<td class="r inv-val ' + (pf < 0 ? 'neg' : pf > 0 ? 'pos' : '') + '" id="iv-prof-' + i + '">' + fmtProfit(pf) + '</td>';
+}
+
+function stockRow(it, i) {
+  return '<tr>' +
+    '<td>' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="Название"') + '</td>' +
+    '<td>' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SBER"') + '</td>' +
+    '<td>' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
+    '<td>' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
+    '<td>' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
+    '<td class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
+    profitCell(i, it) +
+    '<td><button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
+  '</tr>';
+}
+
+function bondRow(it, i) {
+  const every = [[1, '1 мес'], [3, '3 мес'], [6, '6 мес'], [12, '12 мес']]
+    .map(x => '<option value="' + x[0] + '"' + (+it.couponEvery === x[0] ? ' selected' : '') + '>' + x[1] + '</option>').join('');
+  return '<tr>' +
+    '<td>' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="ОФЗ 26238"') + '</td>' +
+    '<td>' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SU26238RMFS4"') + '</td>' +
+    '<td>' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
+    '<td>' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
+    '<td>' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
+    '<td>' + invInput(i, 'coupon', fmtPrice(it.coupon), '', 'inputmode="decimal" placeholder="₽/шт"') + '</td>' +
+    '<td><input class="inv-in inv-date" type="date" data-ii="' + i + '" data-if="couponDate" value="' + esc(it.couponDate) + '" title="Дата ближайшей выплаты"></td>' +
+    '<td><select class="inv-in inv-every" data-ii="' + i + '" data-if="couponEvery">' + every + '</select></td>' +
+    '<td class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
+    profitCell(i, it) +
+    '<td><button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
+  '</tr>';
+}
+
+function renderInvStocks() {
+  const box = document.getElementById('invStocks');
+  if (!box) return;
+  const items = state.investments.map((it, i) => ({ it, i })).filter(x => x.it.kind !== 'bond');
+  if (!items.length) {
+    box.innerHTML = '<div class="inv-empty">Пока пусто: нажмите «+ Акция или фонд» и впишите, что купили.</div>';
+    return;
+  }
+  box.innerHTML = '<table class="tbl inv"><thead><tr><th>Название</th><th>Тикер</th><th class="r">Кол-во</th>' +
+    '<th class="r">Цена покупки</th><th class="r">Текущая цена</th><th class="r">Стоимость</th><th class="r">Прибыль</th><th></th>' +
+    '</tr></thead><tbody>' + items.map(x => stockRow(x.it, x.i)).join('') + '</tbody></table>';
+}
+
+function renderInvBonds() {
+  const box = document.getElementById('invBonds');
+  if (!box) return;
+  const items = state.investments.map((it, i) => ({ it, i })).filter(x => x.it.kind === 'bond');
+  if (!items.length) {
+    box.innerHTML = '<div class="inv-empty">Пока пусто: нажмите «+ Облигация», укажите купон и дату выплаты — посчитаю доход и напомню о выплате.</div>';
+    return;
+  }
+  box.innerHTML = '<table class="tbl inv"><thead><tr><th>Название</th><th>Тикер</th><th class="r">Кол-во</th>' +
+    '<th class="r">Цена покупки</th><th class="r">Текущая цена</th><th class="r">Купон<br>₽/шт</th>' +
+    '<th>Дата купона</th><th>Период</th><th class="r">Стоимость</th><th class="r">Прибыль</th><th></th>' +
+    '</tr></thead><tbody>' + items.map(x => bondRow(x.it, x.i)).join('') + '</tbody></table>';
+}
+
+function renderCalendar() {
+  const box = document.getElementById('invCalendar');
+  if (!box) return;
+  const rows = state.investments
+    .filter(it => it.kind === 'bond')
+    .map(it => {
+      const d = nextCouponDate(it);
+      return d ? { it, d, amount: (it.coupon || 0) * (it.qty || 0), days: daysUntil(d) } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => (a.d < b.d ? -1 : 1));
+
+  if (!rows.length) {
+    box.innerHTML = '<div class="inv-empty">Пока нет дат купонов — добавьте облигацию и укажите дату выплаты или нажмите «Обновить с MOEX».</div>';
+    return;
+  }
+  box.innerHTML = rows.map(r =>
+    '<div class="pay">' +
+      '<span class="pay-date">' + dayMonth(r.d) + '</span>' +
+      '<span class="pay-name">' + esc(r.it.name || r.it.ticker || 'Облигация') + '</span>' +
+      '<span class="pay-amt">+' + fmtMoney(r.amount) + '</span>' +
+      '<span class="pay-when">' + whenText(r.days) + '</span>' +
+    '</div>').join('');
+}
+
+function refreshInvValues() {
+  state.investments.forEach((it, i) => {
+    const v = document.getElementById('iv-val-' + i);
+    if (v) v.textContent = fmtMoney((it.qty || 0) * (it.price || 0));
+    const pr = document.getElementById('iv-prof-' + i);
+    if (pr) {
+      const pf = (it.qty || 0) * ((it.price || 0) - (it.buyPrice || 0));
+      pr.textContent = fmtProfit(pf);
+      pr.className = 'r inv-val ' + (pf < 0 ? 'neg' : pf > 0 ? 'pos' : '');
+    }
+  });
+  updateInvStrip();
+  renderCalendar();
+}
+
+function renderInvest() {
+  updateInvStrip();
+  renderInvStocks();
+  renderInvBonds();
+  renderCalendar();
+  const up = document.getElementById('invUpdated');
+  if (up) {
+    up.textContent = state.invUpdatedAt
+      ? 'цены обновлены ' + new Date(state.invUpdatedAt).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+      : 'цены можно ввести вручную';
+  }
+}
+
+/* --- котировки и купоны с Московской биржи (ISS) --- */
+const MOEX = 'https://iss.moex.com/iss';
+
+async function moexJson(url) {
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+async function moexStockPrice(ticker) {
+  const boards = ['TQBR', 'TQTF', 'TQIF'];
+  for (let b = 0; b < boards.length; b++) {
+    try {
+      const j = await moexJson(MOEX + '/engines/stock/markets/shares/boards/' + boards[b] + '/securities/' +
+        encodeURIComponent(ticker) + '.json?iss.meta=off&iss.only=marketdata&marketdata.columns=LAST,CLOSEPRICE,MARKETPRICE');
+      const md = j.marketdata;
+      if (!md || !md.data || !md.data.length) continue;
+      const row = md.data[0], cols = md.columns;
+      const pick = ['LAST', 'CLOSEPRICE', 'MARKETPRICE']
+        .map(c => row[cols.indexOf(c)])
+        .find(v => typeof v === 'number' && v > 0);
+      if (pick) return pick;
+    } catch (e) {}
+  }
+  return null;
+}
+
+async function moexBondCoupon(ticker) {
+  try {
+    const j = await moexJson(MOEX + '/securities/' + encodeURIComponent(ticker) + '/bondization.json?iss.meta=off&iss.only=coupons');
+    const c = j.coupons;
+    if (!c || !c.data || !c.data.length) return null;
+    const cols = c.columns;
+    const iDate = cols.indexOf('coupondate'), iVal = cols.indexOf('value_rub'), iName = cols.indexOf('name');
+    const today = todayISO();
+    const future = c.data.filter(r => r[iDate] && r[iDate] >= today);
+    if (!future.length) return null;
+    const first = future[0];
+    let every = 6;
+    if (future.length > 1) {
+      const a = parseISO(future[0][iDate]), b = parseISO(future[1][iDate]);
+      const months = Math.round((b.y - a.y) * 12 + (b.m - a.m));
+      every = [1, 3, 6, 12].indexOf(months) >= 0 ? months : (months >= 10 ? 12 : months >= 4 ? 6 : months >= 2 ? 3 : 1);
+    }
+    return { date: first[iDate], coupon: r2(num(first[iVal], 0)), every, name: String(first[iName] || '') };
+  } catch (e) { return null; }
+}
+
 /* =======================================================================
    СБОРКА
    ======================================================================= */
@@ -1310,6 +1628,7 @@ function renderAll(rebuildInputs) {
   renderWeekly();
   renderQuarters();
   renderOps();
+  renderInvest();
   if (rebuildInputs) { renderInputs(); renderMoney(); }
   else { updateInputTotals(); updateMoneyTotals(); }
   renderGoals();
@@ -1635,6 +1954,98 @@ document.getElementById('opsList').addEventListener('click', e => {
 
 buildOpSelects();
 
+/* ---------- инвестиции: ввод, добавление, обновление ---------- */
+function onInvInput(e) {
+  const el = e.target;
+  if (!el.dataset || el.dataset.ii == null) return;
+  const i = +el.dataset.ii, f = el.dataset.if;
+  const it = state.investments[i];
+  if (!it) return;
+  if (f === 'name') it.name = el.value.slice(0, 40);
+  else if (f === 'ticker') it.ticker = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 16);
+  else if (f === 'couponDate') it.couponDate = el.value || '';
+  else if (f === 'couponEvery') it.couponEvery = +el.value || 0;
+  else if (f === 'qty') it.qty = Math.max(0, Math.round(num(el.value, 0) * 10000) / 10000);
+  else it[f] = Math.max(0, r2(num(el.value, 0)));
+  save();
+  refreshInvValues();
+}
+
+['invStocks', 'invBonds'].forEach(id => {
+  const box = document.getElementById(id);
+  box.addEventListener('input', onInvInput);
+  box.addEventListener('change', onInvInput);
+});
+
+document.getElementById('invCard').addEventListener('click', e => {
+  const b = e.target.closest('[data-invdel]');
+  if (!b) return;
+  state.investments.splice(+b.dataset.invdel, 1);
+  save(); renderInvest();
+  toast('Бумага удалена');
+});
+
+document.getElementById('addStock').addEventListener('click', () => {
+  state.investments.push({
+    id: 'inv' + Date.now().toString(36), kind: 'stock', name: '', ticker: '',
+    qty: 1, buyPrice: 0, price: 0, coupon: 0, couponDate: '', couponEvery: 0
+  });
+  save(); renderInvest();
+  focusLast('#invStocks .inv-name');
+});
+
+document.getElementById('addBond').addEventListener('click', () => {
+  state.investments.push({
+    id: 'inv' + Date.now().toString(36), kind: 'bond', name: '', ticker: '',
+    qty: 1, buyPrice: 0, price: 0, coupon: 0, couponDate: '', couponEvery: 6
+  });
+  save(); renderInvest();
+  focusLast('#invBonds .inv-name');
+});
+
+document.getElementById('invRefresh').addEventListener('click', async () => {
+  const btn = document.getElementById('invRefresh');
+  if (btn.disabled) return;
+  if (!state.investments.some(it => it.ticker)) {
+    toast('Сначала укажите тикер бумаги');
+    return;
+  }
+  const old = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Обновляю…';
+  let ok = 0, fail = 0;
+
+  await Promise.all(state.investments.map(async it => {
+    if (!it.ticker) return;
+    if (it.kind === 'bond') {
+      const c = await moexBondCoupon(it.ticker);
+      if (!c) { fail++; return; }
+      if (c.date) it.couponDate = c.date;
+      if (c.coupon > 0) it.coupon = c.coupon;
+      if (c.every) it.couponEvery = c.every;
+      if (!it.name && c.name) it.name = c.name.slice(0, 40);
+      ok++;
+    } else {
+      const p = await moexStockPrice(it.ticker);
+      if (!p) { fail++; return; }
+      it.price = r2(p);
+      if (!it.name) it.name = it.ticker;
+      ok++;
+    }
+  }));
+
+  btn.disabled = false;
+  btn.textContent = old;
+  if (ok) {
+    state.invUpdatedAt = Date.now();
+    save();
+    renderInvest();
+  }
+  toast(ok
+    ? 'Обновлено: ' + ok + ' ' + plural(ok, 'бумага', 'бумаги', 'бумаг') + (fail ? ' · не найдено: ' + fail : '')
+    : 'Не удалось получить данные — проверьте тикеры и интернет');
+});
+
 $('#todayLabel').textContent = 'на ' + new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).replace(' г.', '');
 
 $('#printBtn').addEventListener('click', () => window.print());
@@ -1722,7 +2133,9 @@ function syncData() {
     money: state.money,
     debts: state.debts,
     goals: state.goals,
-    ops: state.ops
+    ops: state.ops,
+    investments: state.investments,
+    invUpdatedAt: state.invUpdatedAt
   };
 }
 
