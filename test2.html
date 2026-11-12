@@ -200,6 +200,12 @@
   .pay-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .pay-amt{font-weight:700;color:var(--green);white-space:nowrap;font-variant-numeric:tabular-nums}
   .pay-when{color:var(--muted);font-size:11.5px;white-space:nowrap}
+  .invcash{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#ecfeff,#f0fdfa);border:1px solid #a5f3fc;border-radius:14px;padding:13px 16px;margin:0 0 4px}
+  .invcash-t{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#0e7490;font-weight:700}
+  .invcash-v{font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#0f766e;margin-top:4px}
+  .invcash-s{font-size:11.5px;color:#475569;margin-top:3px;max-width:470px}
+  .invcash-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .invcash-actions .btn{padding:8px 12px;font-size:12.5px}
 
   /* ---------- журнал операций ---------- */
   .op-actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -213,12 +219,16 @@
   .op-ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:15px;flex:0 0 auto}
   .op-ico.in{background:var(--green-soft);color:#047857}
   .op-ico.exp{background:var(--rose-soft);color:#be123c}
+  .op-ico.mov{background:#eef2ff;color:#4338ca}
+  .op-ico.inv{background:#ecfeff;color:#0e7490}
   .op-main{flex:1;min-width:0}
   .op-name{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .op-sub{font-size:11.5px;color:var(--muted)}
   .op-amt{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13.5px}
   .op-amt.in{color:var(--green)}
   .op-amt.exp{color:var(--rose)}
+  .op-amt.mov{color:#4338ca}
+  .op-amt.inv{color:#0e7490}
   .op-empty{padding:14px 4px 6px;font-size:13px;color:var(--muted);max-width:720px}
   .op-note{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px;padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:11px;font-size:12.5px;color:#92400e}
   .op-note .btn{padding:6px 11px;font-size:12px;background:#fff;border-color:#fcd34d;color:#92400e;box-shadow:none}
@@ -380,6 +390,7 @@
     h2{font-size:14.5px}
     .op-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
     .op-actions .btn{height:44px}
+    #addTransfer{grid-column:1/-1}
     .op-list{max-height:340px;margin:0 -2px}
     .op{padding:10px 2px;gap:10px}
     .op-ico{width:38px;height:38px;border-radius:12px}
@@ -420,6 +431,12 @@
 
     .inv-h{margin-top:16px}
     .inv-h .btn{height:40px}
+    .invcash{flex-direction:column;align-items:stretch;gap:12px;padding:14px}
+    .invcash-v{font-size:22px}
+    .invcash-s{max-width:none;font-size:12px;line-height:1.4}
+    .invcash-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .invcash-actions .btn{height:42px;justify-content:center;padding:0 8px}
+    #invToCard{grid-column:1/-1}
     .pays{grid-template-columns:1fr}
     .pay{padding:10px 12px;font-size:13px}
     .tips{display:none}
@@ -508,6 +525,7 @@
       <div class="op-actions no-print">
         <button class="btn green" id="addIncome" type="button">+ Поступление</button>
         <button class="btn rose" id="addExpense" type="button">− Трата</button>
+        <button class="btn ghost" id="addTransfer" type="button">⇄ Перевод</button>
       </div>
     </div>
     <div class="op-list" id="opsList"></div>
@@ -565,8 +583,9 @@
         <h3>Деньги: наличные и счета</h3>
         <div id="moneyList"></div>
         <div class="money-total"><span>Всего денег</span><b id="moneySum">—</b></div>
-        <div class="hint" style="margin-top:4px">Остаток меняется сам, когда вы добавляете операции со счётом.</div>
+        <div class="hint" style="margin-top:4px">Это фактический остаток на счёте на сегодня. Он может не совпадать с «Остатком» за период сверху: там доходы минус расходы, а здесь — деньги на счёте с учётом прошлых операций. Сумму можно поправить в поле.</div>
         <button class="btn no-print" id="addMoney" type="button" style="margin-top:12px">+ Добавить счёт</button>
+        <button class="btn ghost no-print" id="addTransferMoney" type="button" style="margin-top:8px">⇄ Перевести между счетами</button>
       </div>
       <div class="money-col">
         <h3>Кредиты, долги, ипотека</h3>
@@ -586,6 +605,18 @@
       </div>
     </div>
     <div class="netstrip" id="invStrip"></div>
+    <div class="invcash" id="invCashBox">
+      <div class="invcash-main">
+        <div class="invcash-t">Свободные деньги в инвестициях</div>
+        <div class="invcash-v" id="invCashSum">0 ₽</div>
+        <div class="invcash-s">Купоны и дивиденды остаются здесь и не падают на карту. На карту их можно перевести вручную.</div>
+      </div>
+      <div class="invcash-actions no-print">
+        <button class="btn green" id="addCoupon" type="button">+ Купон</button>
+        <button class="btn" id="addDividend" type="button">+ Дивиденды</button>
+        <button class="btn ghost" id="invToCard" type="button">Вывести на карту</button>
+      </div>
+    </div>
     <div class="inv-h"><span>Акции и фонды</span><button class="btn no-print" id="addStock" type="button">+ Акция или фонд</button></div>
     <div class="scroll"><div id="invStocks"></div></div>
     <div class="inv-h"><span>Облигации</span><button class="btn no-print" id="addBond" type="button">+ Облигация</button></div>
@@ -677,6 +708,62 @@
   </div>
 </div>
 
+<div class="modal no-print" id="moveModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="moveTitle">
+    <div class="modal-head">
+      <h3 id="moveTitle">Перевод между счетами</h3>
+      <button class="modal-x" type="button" id="moveClose" aria-label="Закрыть">&times;</button>
+    </div>
+    <form id="moveForm" autocomplete="off">
+      <label>Со счёта
+        <select id="moveFrom" aria-label="Списать со счёта"></select>
+      </label>
+      <label>На счёт
+        <select id="moveTo" aria-label="Зачислить на счёт"></select>
+      </label>
+      <label>Сумма, ₽
+        <input id="moveAmount" inputmode="numeric" placeholder="0" aria-label="Сумма перевода">
+      </label>
+      <label>Дата
+        <input id="moveDate" type="date" aria-label="Дата перевода">
+      </label>
+      <label>Описание
+        <input id="moveNote" placeholder="Например: на накопительный счёт" maxlength="80" aria-label="Описание перевода">
+      </label>
+      <div class="modal-note" id="moveHint">Перевод не меняет доходы и расходы — деньги просто перемещаются.</div>
+      <div class="modal-actions">
+        <button class="btn" type="button" id="moveCancel">Отмена</button>
+        <button class="btn primary" type="submit" id="moveSubmit">Перевести</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal no-print" id="cashModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cashTitle">
+    <div class="modal-head">
+      <h3 id="cashTitle">Купон по облигациям</h3>
+      <button class="modal-x" type="button" id="cashClose" aria-label="Закрыть">&times;</button>
+    </div>
+    <form id="cashForm" autocomplete="off">
+      <label>Сумма, ₽
+        <input id="cashAmount" inputmode="numeric" placeholder="0" aria-label="Сумма выплаты">
+      </label>
+      <label>Дата
+        <input id="cashDate" type="date" aria-label="Дата выплаты">
+      </label>
+      <label>Описание
+        <input id="cashNote" placeholder="Например: купон ОФЗ 26238" maxlength="80" aria-label="Описание выплаты">
+      </label>
+      <div class="modal-note" id="cashHint">Деньги останутся в инвестициях и не попадут на карту.</div>
+      <div class="modal-actions">
+        <button class="btn" type="button" id="cashCancel">Отмена</button>
+        <button class="btn primary" type="submit" id="cashSubmit">Добавить купон</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="modal no-print" id="syncModal" hidden>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="syncTitle">
     <div class="modal-head">
@@ -729,7 +816,10 @@ const CATEGORIES = [
 const DEMO_INCOME = [100000,100000,118000,100000,100000,126000,100000,100000,100000,112000,100000,165000];
 const STORAGE_KEY = 'my-fin-report-t2-v1';
 
-const OP_SOURCES = ['Зарплата', 'Аванс', 'Премия', 'Фриланс', 'Подарок', 'Проценты по вкладу', 'Продажа', 'Возврат долга', 'Другое'];
+const INV_ID = '__inv';
+const INV_NAME = 'Инвестиции';
+const OP_SOURCES = ['Зарплата', 'Аванс', 'Премия', 'Фриланс', 'Подарок', 'Проценты по вкладу', 'Купон по облигациям', 'Дивиденды по акциям', 'Продажа', 'Возврат долга', 'Другое'];
+const isInvSource = s => s === 'Купон по облигациям' || s === 'Дивиденды по акциям';
 const CAT_KEYWORDS = {
   home:    ['аренда', 'квартир', 'жкх', 'коммунал', 'ипотек', 'ремонт', 'мебел', 'дом'],
   food:    ['продукт', 'магнит', 'пятёроч', 'пятероч', 'лента', 'ашан', 'перекрёст', 'перекрест', 'вкусвилл', 'самокат', 'супермаркет', 'еда', 'рынок'],
@@ -800,6 +890,7 @@ function demoState() {
     ],
     ops: [],
     investments: [],
+    invCash: 0,
     invUpdatedAt: 0
   };
 }
@@ -847,21 +938,55 @@ function normalize(s) {
   }
   if (Array.isArray(s.ops)) {
     out.ops = s.ops.slice(0, 500).map(o => {
+      const validRef = id => id === INV_ID || out.money.some(a => a.id === id);
       const rawAcc = o && o.accountId;
-      const accountId = rawAcc === '' || rawAcc === 0 ? ''
-        : (out.money.some(a => a.id === rawAcc) ? rawAcc : null);
-      return {
+      if (o && o.type === 'move') {
+        const fromId = validRef(o.fromId) ? o.fromId : null;
+        const toId = validRef(o.toId) ? o.toId : null;
+        const moved = (typeof o.moved === 'number' && isFinite(o.moved))
+          ? Math.max(0, Math.round(o.moved)) : null;
+        const fromDelta = (typeof o.fromDelta === 'number' && isFinite(o.fromDelta))
+          ? Math.round(o.fromDelta) : null;
+        const toDelta = (typeof o.toDelta === 'number' && isFinite(o.toDelta))
+          ? Math.round(o.toDelta) : null;
+        const move = {
+          id: String((o && o.id) || ('op' + Math.random().toString(16).slice(2))),
+          date: /^\d{4}-\d{2}-\d{2}$/.test(o && o.date) ? o.date : '2026-01-01',
+          type: 'move',
+          amount: Math.max(0, Math.round(num(o && o.amount, 0))),
+          cat: null,
+          source: '',
+          note: String((o && o.note) || '').slice(0, 80),
+          fromId,
+          toId
+        };
+        if (moved !== null) move.moved = moved;
+        if (fromDelta !== null) move.fromDelta = fromDelta;
+        if (toDelta !== null) move.toDelta = toDelta;
+        return move;
+      }
+      const isInv = o && o.type === 'inv';
+      const accountId = isInv ? INV_ID
+        : (rawAcc === '' || rawAcc === 0 ? ''
+          : (validRef(rawAcc) ? rawAcc : null));
+      const accDelta = (o && typeof o.accDelta === 'number' && isFinite(o.accDelta))
+        ? Math.round(o.accDelta) : null;
+      const op = {
         id: String((o && o.id) || ('op' + Math.random().toString(16).slice(2))),
         date: /^\d{4}-\d{2}-\d{2}$/.test(o && o.date) ? o.date : '2026-01-01',
-        type: o && o.type === 'exp' ? 'exp' : 'in',
+        type: isInv ? 'inv' : (o && o.type === 'exp' ? 'exp' : 'in'),
         amount: Math.max(0, Math.round(num(o && o.amount, 0))),
         cat: o && CATEGORIES.some(c => c.id === o.cat) ? o.cat : null,
         source: String((o && o.source) || '').slice(0, 40),
         note: String((o && o.note) || '').slice(0, 80),
         accountId
       };
+      if (isInv) op.invKind = o && o.invKind === 'dividend' ? 'dividend' : 'coupon';
+      if (accDelta !== null) op.accDelta = accDelta;
+      return op;
     });
   }
+  out.invCash = Math.max(0, Math.round(num(s.invCash, 0)));
   if (Array.isArray(s.investments)) {
     out.investments = s.investments.slice(0, 100).map((v, i) => {
       const kind = v && v.kind === 'bond' ? 'bond' : 'stock';
@@ -1363,14 +1488,72 @@ function defaultAccount() {
   return state.money.find(a => /карт|счёт|счет|дебет/i.test(a.name)) || state.money[0];
 }
 
+/* счёт или инвестиционная «касса» по одному и тому же идентификатору */
+function accAmountOf(id) {
+  if (id === INV_ID) return Math.max(0, Math.round(num(state.invCash, 0)));
+  const acc = findAccount(id);
+  return acc ? acc.amount : null;
+}
+
+function setAccAmount(id, value) {
+  const v = Math.max(0, Math.round(num(value, 0)));
+  if (id === INV_ID) { state.invCash = v; return true; }
+  const acc = findAccount(id);
+  if (!acc) return false;
+  acc.amount = v;
+  return true;
+}
+
+function accNameById(id) {
+  if (id === INV_ID) return INV_NAME;
+  const acc = findAccount(id);
+  return acc ? acc.name : '';
+}
+
 /* прибавляет (sign = 1) или откатывает (sign = -1) влияние операции на остаток счёта */
 function applyOpAccount(op, sign) {
   if (!op.accountId) return null;
-  const acc = findAccount(op.accountId);
-  if (!acc) return null;
-  const delta = (op.type === 'in' ? 1 : -1) * op.amount * sign;
-  acc.amount = Math.max(0, acc.amount + delta);
-  return acc;
+  const id = op.accountId;
+  const cur = accAmountOf(id);
+  if (cur === null) return null;
+  if (sign === 1) {
+    const before = cur;
+    const delta = (op.type === 'exp' ? -1 : 1) * op.amount;
+    setAccAmount(id, before + delta);
+    /* запоминаем, на сколько счёт реально изменился: при нехватке денег
+       списание упирается в ноль, и откат должен вернуть ровно это значение */
+    op.accDelta = accAmountOf(id) - before;
+  } else {
+    const delta = (typeof op.accDelta === 'number' && isFinite(op.accDelta))
+      ? -op.accDelta
+      : (op.type === 'exp' ? 1 : -1) * op.amount;
+    setAccAmount(id, cur + delta);
+  }
+  return { id, name: accNameById(id) };
+}
+
+/* перевод между счетами: sign = 1 — выполнить, sign = -1 — отменить */
+function applyMove(op, sign) {
+  const from = op.fromId, to = op.toId;
+  if (!from || !to || from === to) return null;
+  const fromNow = accAmountOf(from), toNow = accAmountOf(to);
+  if (fromNow === null || toNow === null) return null;
+  if (sign === 1) {
+    const moved = Math.min(op.amount, fromNow);
+    setAccAmount(from, fromNow - moved);
+    setAccAmount(to, toNow + moved);
+    op.moved = moved;
+    op.fromDelta = -moved;
+    op.toDelta = moved;
+  } else {
+    const fd = (typeof op.fromDelta === 'number' && isFinite(op.fromDelta))
+      ? op.fromDelta : -op.amount;
+    const td = (typeof op.toDelta === 'number' && isFinite(op.toDelta))
+      ? op.toDelta : op.amount;
+    setAccAmount(from, fromNow - fd);
+    setAccAmount(to, toNow - td);
+  }
+  return { from: accNameById(from), to: accNameById(to) };
 }
 
 const moneySum = () => state.money.reduce((s, a) => s + a.amount, 0);
@@ -1466,21 +1649,43 @@ function renderOps() {
   box.innerHTML = list.map(o => {
     const p = parseISO(o.date);
     const isIn = o.type === 'in';
-    const title = o.note ? o.note : (isIn ? (o.source || 'Поступление') : catName(o.cat));
-    const acc = o.accountId ? findAccount(o.accountId) : null;
+    const isMove = o.type === 'move';
+    const isInv = o.type === 'inv';
+    let title, icon, icoCls, amtCls, amtText;
     const bits = [p.d + ' ' + MONTHS_SHORT[p.m] + ' ' + p.y];
-    bits.push(isIn ? ('поступление' + (o.source ? ' · ' + o.source : '')) : ('трата · ' + catName(o.cat)));
-    if (acc) bits.push(acc.name);
+    if (isMove) {
+      const fromName = accNameById(o.fromId) || '—';
+      const toName = accNameById(o.toId) || '—';
+      title = o.note ? o.note : 'Перевод между счетами';
+      bits.push('перевод · ' + fromName + ' → ' + toName);
+      icon = '\u21C4'; icoCls = 'mov'; amtCls = 'mov';
+      amtText = fmtMoney(o.amount);
+    } else if (isInv) {
+      const div = o.invKind === 'dividend';
+      title = o.note ? o.note : (div ? 'Дивиденды' : 'Купон');
+      bits.push((div ? 'дивиденды' : 'купон') + ' · ' + INV_NAME + ' · осталось в инвестициях');
+      icon = '\u20BD'; icoCls = 'inv'; amtCls = 'inv';
+      amtText = '+' + fmtMoney(o.amount);
+    } else {
+      title = o.note ? o.note : (isIn ? (o.source || 'Поступление') : catName(o.cat));
+      bits.push(isIn ? ('поступление' + (o.source ? ' · ' + o.source : '')) : ('трата · ' + catName(o.cat)));
+      const acc = o.accountId ? findAccount(o.accountId) : null;
+      if (acc) bits.push(acc.name);
+      icon = isIn ? '\u2191' : '\u2193';
+      icoCls = isIn ? 'in' : 'exp';
+      amtCls = icoCls;
+      amtText = (isIn ? '+' : '\u2212') + fmtMoney(o.amount);
+    }
     return '<div class="op">' +
-      '<div class="op-ico ' + (isIn ? 'in' : 'exp') + '">' + (isIn ? '↑' : '↓') + '</div>' +
+      '<div class="op-ico ' + icoCls + '">' + icon + '</div>' +
       '<div class="op-main"><div class="op-name">' + esc(title) + '</div>' +
       '<div class="op-sub">' + esc(bits.join(' · ')) + '</div></div>' +
-      '<div class="op-amt ' + (isIn ? 'in' : 'exp') + '">' + (isIn ? '+' : '\u2212') + fmtMoney(o.amount) + '</div>' +
+      '<div class="op-amt ' + amtCls + '">' + amtText + '</div>' +
       '<button class="del no-print" data-opdel="' + esc(o.id) + '" type="button" title="Удалить операцию">&times;</button>' +
     '</div>';
   }).join('');
 
-  const legacy = state.ops.filter(o => o.accountId === null);
+  const legacy = state.ops.filter(o => o.type !== 'move' && o.type !== 'inv' && o.accountId === null);
   if (legacy.length) {
     const target = defaultAccount();
     box.innerHTML += '<div class="op-note no-print"><span>' +
@@ -1579,6 +1784,11 @@ function updateInvStrip() {
     '<div class="net ' + (t.coupons > 0 ? 'pos' : '') + '"><div class="t">Купоны за год</div>' +
       '<div class="v">' + fmtMoney(t.coupons) + '</div>' +
       '<div class="s">' + (near ? 'ближайший ' + dayMonth(near.d) + ' · ' + fmtMoney(near.amount) : 'по облигациям') + '</div></div>';
+}
+
+function updateInvCash() {
+  const el = document.getElementById('invCashSum');
+  if (el) el.textContent = fmtMoney(Math.max(0, Math.round(num(state.invCash, 0))));
 }
 
 function invInput(i, f, val, cls, extra) {
@@ -1691,6 +1901,7 @@ function refreshInvValues() {
 
 function renderInvest() {
   updateInvStrip();
+  updateInvCash();
   renderInvStocks();
   renderInvBonds();
   renderCalendar();
@@ -1926,10 +2137,10 @@ function buildOpSelects() {
     CATEGORIES.map(c => '<option value="' + c.id + '">' + esc(c.name) + '</option>').join('');
   document.getElementById('opSource').innerHTML =
     OP_SOURCES.map(s => '<option value="' + esc(s) + '">' + esc(s) + '</option>').join('');
-  document.getElementById('opAcc').innerHTML = state.money.length
-    ? state.money.map(a => '<option value="' + esc(a.id) + '">' + esc(a.name || 'Счёт') + '</option>').join('') +
-      '<option value="">Не менять остаток</option>'
-    : '<option value="">Счетов нет — остаток не меняется</option>';
+  document.getElementById('opAcc').innerHTML =
+    state.money.map(a => '<option value="' + esc(a.id) + '">' + esc(a.name || 'Счёт') + '</option>').join('') +
+    '<option value="' + INV_ID + '">' + INV_NAME + ' — свободные деньги</option>' +
+    '<option value="">Не менять остаток</option>';
 }
 
 function todayISO() {
@@ -1939,8 +2150,7 @@ function todayISO() {
 
 function opAccName() {
   const el = document.getElementById('opAcc');
-  const acc = el && el.value ? findAccount(el.value) : null;
-  return acc ? acc.name : '';
+  return el && el.value ? accNameById(el.value) : '';
 }
 
 function opHintText() {
@@ -1948,6 +2158,10 @@ function opHintText() {
   const pick = document.getElementById('opCat').value;
   const acc = opAccName();
   if (opType === 'in') {
+    const src = document.getElementById('opSource').value;
+    if (isInvSource(src)) {
+      return 'Деньги останутся в инвестициях и не попадут на карту. В доходы месяца эта выплата не входит.';
+    }
     return 'Сумма попадёт в доходы месяца' + (acc
       ? ', а остаток на счёте «' + acc + '» вырастет.'
       : '. Остатки на счетах не меняются.');
@@ -1993,9 +2207,11 @@ document.getElementById('addExpense').addEventListener('click', () => openOp('ex
 const fabIncome = document.getElementById('fabIncome');
 const fabExpense = document.getElementById('fabExpense');
 const fabTop = document.getElementById('fabTop');
+const fabSync = document.getElementById('fabSync');
 if (fabIncome) fabIncome.addEventListener('click', () => openOp('in'));
 if (fabExpense) fabExpense.addEventListener('click', () => openOp('exp'));
 if (fabTop) fabTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+if (fabSync) fabSync.addEventListener('click', openSyncModal);
 document.getElementById('opCancel').addEventListener('click', closeOp);
 document.getElementById('opClose').addEventListener('click', closeOp);
 document.getElementById('opModal').addEventListener('click', e => {
@@ -2008,6 +2224,17 @@ document.getElementById('opNote').addEventListener('input', () => {
   document.getElementById('opHint').textContent = opHintText();
 });
 document.getElementById('opCat').addEventListener('change', () => {
+  document.getElementById('opHint').textContent = opHintText();
+});
+document.getElementById('opSource').addEventListener('change', () => {
+  const src = document.getElementById('opSource').value;
+  const accEl = document.getElementById('opAcc');
+  if (opType === 'in' && isInvSource(src)) {
+    accEl.value = INV_ID;
+  } else if (opType === 'in' && !isInvSource(src) && accEl.value === INV_ID) {
+    const target = defaultAccount();
+    accEl.value = target ? target.id : '';
+  }
   document.getElementById('opHint').textContent = opHintText();
 });
 document.getElementById('opAcc').addEventListener('change', () => {
@@ -2041,21 +2268,33 @@ document.getElementById('opForm').addEventListener('submit', e => {
     const pick = document.getElementById('opCat').value;
     cat = pick === 'auto' ? guessCat(note) : pick;
   }
+  const invIncome = isIn && isInvSource(source);
   const op = {
     id: 'op' + Date.now().toString(36) + Math.random().toString(16).slice(2, 6),
-    date, type: opType, amount, cat, source, note, accountId
+    date,
+    type: invIncome ? 'inv' : opType,
+    amount,
+    cat: invIncome ? null : cat,
+    source,
+    note,
+    accountId: invIncome ? INV_ID : accountId
   };
-  if (isIn) state.income[p.m] += amount;
-  else state.expenses[cat || 'other'][p.m] += amount;
+  if (invIncome) op.invKind = source === 'Дивиденды по акциям' ? 'dividend' : 'coupon';
+  if (!invIncome) {
+    if (isIn) state.income[p.m] += amount;
+    else state.expenses[cat || 'other'][p.m] += amount;
+  }
   state.ops.unshift(op);
   const acc = applyOpAccount(op, 1);
   state.year = p.y;
   save();
   closeOp();
   renderAll(true);
-  toast(isIn
-    ? 'Поступление +' + fmtMoney(amount) + ' · ' + MONTHS[p.m] + (acc ? ' · ' + acc.name : '')
-    : 'Трата −' + fmtMoney(amount) + ' · ' + catName(cat) + ' · ' + MONTHS[p.m] + (acc ? ' · ' + acc.name : ''));
+  toast(invIncome
+    ? (op.invKind === 'dividend' ? 'Дивиденды' : 'Купон') + ' +' + fmtMoney(amount) + ' · осталось в инвестициях'
+    : isIn
+      ? 'Поступление +' + fmtMoney(amount) + ' · ' + MONTHS[p.m] + (acc ? ' · ' + acc.name : '')
+      : 'Трата −' + fmtMoney(amount) + ' · ' + catName(cat) + ' · ' + MONTHS[p.m] + (acc ? ' · ' + acc.name : ''));
 });
 
 document.getElementById('opsList').addEventListener('click', e => {
@@ -2080,6 +2319,22 @@ document.getElementById('opsList').addEventListener('click', e => {
   const i = state.ops.findIndex(o => o.id === b.dataset.opdel);
   if (i < 0) return;
   const o = state.ops[i];
+  if (o.type === 'move') {
+    applyMove(o, -1);
+    state.ops.splice(i, 1);
+    save();
+    renderAll(true);
+    toast('Перевод отменён');
+    return;
+  }
+  if (o.type === 'inv') {
+    applyOpAccount(o, -1);
+    state.ops.splice(i, 1);
+    save();
+    renderAll(true);
+    toast('Выплата удалена');
+    return;
+  }
   const m = parseISO(o.date).m;
   if (o.type === 'in') {
     state.income[m] = Math.max(0, state.income[m] - o.amount);
@@ -2095,6 +2350,212 @@ document.getElementById('opsList').addEventListener('click', e => {
 });
 
 buildOpSelects();
+
+/* ---------- переводы между счетами ---------- */
+function moveOptions(selected) {
+  const parts = state.money.map(a =>
+    '<option value="' + esc(a.id) + '"' + (a.id === selected ? ' selected' : '') + '>' +
+      esc(a.name || 'Счёт') + ' · ' + fmtMoney(a.amount) + '</option>');
+  parts.push('<option value="' + INV_ID + '"' + (selected === INV_ID ? ' selected' : '') + '>' +
+    INV_NAME + ' · ' + fmtMoney(Math.max(0, Math.round(num(state.invCash, 0)))) + '</option>');
+  return parts.join('');
+}
+
+function fillMoveSelects(from, to) {
+  document.getElementById('moveFrom').innerHTML = moveOptions(from);
+  document.getElementById('moveTo').innerHTML = moveOptions(to);
+}
+
+function moveHintText() {
+  const hint = document.getElementById('moveHint');
+  if (!hint) return;
+  const from = document.getElementById('moveFrom').value;
+  const to = document.getElementById('moveTo').value;
+  if (!from || !to) { hint.textContent = 'Выберите оба счёта.'; return; }
+  if (from === to) { hint.textContent = 'Счёт списания и зачисления должны различаться.'; return; }
+  hint.textContent = 'Доступно на счёте «' + accNameById(from) + '»: ' + fmtMoney(accAmountOf(from) || 0) +
+    '. Перевод не меняет доходы и расходы: деньги просто перемещаются.';
+}
+
+function openMove(fromId, toId) {
+  const fallbackFrom = defaultAccount() ? defaultAccount().id : INV_ID;
+  const valid = id => id === INV_ID || !!findAccount(id);
+  const from = fromId && valid(fromId) ? fromId : fallbackFrom;
+  let to = toId && valid(toId) ? toId : '';
+  if (!to || to === from) {
+    const other = state.money.find(a => a.id !== from);
+    to = other ? other.id : (from === INV_ID ? '' : INV_ID);
+  }
+  if (!to || to === from) {
+    toast('Нужны два разных счёта — добавьте карту или счёт');
+    return;
+  }
+  fillMoveSelects(from, to);
+  document.getElementById('moveFrom').value = from;
+  document.getElementById('moveTo').value = to;
+  document.getElementById('moveAmount').value = '';
+  document.getElementById('moveDate').value = todayISO();
+  document.getElementById('moveNote').value = '';
+  moveHintText();
+  document.getElementById('moveModal').hidden = false;
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('moveAmount').focus(), 30);
+}
+
+function closeMove() {
+  document.getElementById('moveModal').hidden = true;
+  document.body.style.overflow = '';
+}
+
+document.getElementById('addTransfer').addEventListener('click', () => openMove());
+document.getElementById('addTransferMoney').addEventListener('click', () => openMove());
+document.getElementById('moveCancel').addEventListener('click', closeMove);
+document.getElementById('moveClose').addEventListener('click', closeMove);
+document.getElementById('moveModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('moveModal')) closeMove();
+});
+document.getElementById('moveFrom').addEventListener('change', moveHintText);
+document.getElementById('moveTo').addEventListener('change', moveHintText);
+
+document.getElementById('moveForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const from = document.getElementById('moveFrom').value;
+  const to = document.getElementById('moveTo').value;
+  if (!from || !to || from === to) {
+    toast('Выберите два разных счёта');
+    return;
+  }
+  const amountEl = document.getElementById('moveAmount');
+  const amount = Math.max(0, Math.round(num(amountEl.value, 0)));
+  if (!amount) {
+    toast('Введите сумму больше нуля');
+    amountEl.focus();
+    return;
+  }
+  const available = accAmountOf(from);
+  if (available === null) {
+    toast('Счёт списания не найден');
+    return;
+  }
+  if (amount > available) {
+    toast('Недостаточно денег: доступно ' + fmtMoney(available));
+    amountEl.focus();
+    return;
+  }
+  const dateEl = document.getElementById('moveDate');
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(dateEl.value) ? dateEl.value : todayISO();
+  const p = parseISO(date);
+  if (!(p.y >= 2000 && p.y <= 2100)) {
+    toast('Проверьте дату');
+    dateEl.focus();
+    return;
+  }
+  const note = document.getElementById('moveNote').value.trim().slice(0, 80);
+  const op = {
+    id: 'op' + Date.now().toString(36) + Math.random().toString(16).slice(2, 6),
+    date,
+    type: 'move',
+    amount,
+    fromId: from,
+    toId: to,
+    note
+  };
+  state.ops.unshift(op);
+  applyMove(op, 1);
+  state.year = p.y;
+  save();
+  closeMove();
+  renderAll(true);
+  toast('Переведено ' + fmtMoney(amount) + ' · ' + accNameById(from) + ' → ' + accNameById(to));
+});
+
+/* ---------- купоны и дивиденды: остаются в инвестициях ---------- */
+let cashMode = 'coupon';
+
+function openCash(mode) {
+  cashMode = mode === 'dividend' ? 'dividend' : 'coupon';
+  const isDiv = cashMode === 'dividend';
+  document.getElementById('cashTitle').textContent = isDiv ? 'Дивиденды по акциям' : 'Купон по облигациям';
+  document.getElementById('cashSubmit').textContent = isDiv ? 'Добавить дивиденды' : 'Добавить купон';
+  document.getElementById('cashHint').textContent =
+    'Сумма останется в инвестициях и не попадёт на карту. В доходы месяца она не входит.';
+  document.getElementById('cashAmount').value = '';
+  document.getElementById('cashDate').value = todayISO();
+  document.getElementById('cashNote').value = '';
+  document.getElementById('cashModal').hidden = false;
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('cashAmount').focus(), 30);
+}
+
+function closeCash() {
+  document.getElementById('cashModal').hidden = true;
+  document.body.style.overflow = '';
+}
+
+document.getElementById('addCoupon').addEventListener('click', () => openCash('coupon'));
+document.getElementById('addDividend').addEventListener('click', () => openCash('dividend'));
+document.getElementById('cashCancel').addEventListener('click', closeCash);
+document.getElementById('cashClose').addEventListener('click', closeCash);
+document.getElementById('cashModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('cashModal')) closeCash();
+});
+
+document.getElementById('cashForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const amountEl = document.getElementById('cashAmount');
+  const amount = Math.max(0, Math.round(num(amountEl.value, 0)));
+  if (!amount) {
+    toast('Введите сумму больше нуля');
+    amountEl.focus();
+    return;
+  }
+  const dateEl = document.getElementById('cashDate');
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(dateEl.value) ? dateEl.value : todayISO();
+  const p = parseISO(date);
+  if (!(p.y >= 2000 && p.y <= 2100)) {
+    toast('Проверьте дату');
+    dateEl.focus();
+    return;
+  }
+  const isDiv = cashMode === 'dividend';
+  const op = {
+    id: 'op' + Date.now().toString(36) + Math.random().toString(16).slice(2, 6),
+    date,
+    type: 'inv',
+    amount,
+    cat: null,
+    source: isDiv ? 'Дивиденды по акциям' : 'Купон по облигациям',
+    note: document.getElementById('cashNote').value.trim().slice(0, 80),
+    accountId: INV_ID,
+    invKind: isDiv ? 'dividend' : 'coupon'
+  };
+  state.ops.unshift(op);
+  applyOpAccount(op, 1);
+  state.year = p.y;
+  save();
+  closeCash();
+  renderAll(true);
+  toast((isDiv ? 'Дивиденды' : 'Купон') + ' +' + fmtMoney(amount) + ' · осталось в инвестициях');
+});
+
+document.getElementById('invToCard').addEventListener('click', () => {
+  if (!state.money.length) {
+    toast('Сначала добавьте карту или счёт в блоке «Деньги»');
+    return;
+  }
+  if (!(num(state.invCash, 0) > 0)) {
+    toast('Свободных денег в инвестициях пока нет');
+    return;
+  }
+  const target = defaultAccount() || state.money[0];
+  openMove(INV_ID, target.id);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (!document.getElementById('moveModal').hidden) closeMove();
+  if (!document.getElementById('cashModal').hidden) closeCash();
+});
 
 /* ---------- инвестиции: ввод, добавление, обновление ---------- */
 function onInvInput(e) {
@@ -2226,6 +2687,7 @@ $('#clearBtn').addEventListener('click', () => {
   state.money.forEach(a => { a.amount = 0; });
   state.debts.forEach(d => { d.amount = 0; d.payment = 0; });
   state.ops = [];
+  state.invCash = 0;
   save(); renderAll(true);
   toast('Все суммы обнулены — вводите свои');
 });
@@ -2277,6 +2739,7 @@ function syncData() {
     goals: state.goals,
     ops: state.ops,
     investments: state.investments,
+    invCash: state.invCash,
     invUpdatedAt: state.invUpdatedAt
   };
 }
