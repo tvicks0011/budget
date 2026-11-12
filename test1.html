@@ -278,6 +278,7 @@
   .sync-state.off::before{background:#cbd5e1}
   .sync-badge{display:inline-flex;align-items:center;gap:6px}
   .sync-badge svg{width:15px;height:15px}
+  .mobilebar{display:none}
 
   @media (max-width:1040px){
     .kpis{grid-template-columns:repeat(2,1fr)}
@@ -298,6 +299,126 @@
     .seg{width:100%;justify-content:space-between}
     .seg button{flex:1;padding:7px 6px}
     .donut{flex-basis:160px;max-width:160px}
+  }
+
+  /* ---------- телефон ---------- */
+  @media screen and (max-width: 820px){
+    html{-webkit-text-size-adjust:100%}
+    .wrap{padding:16px 12px calc(92px + env(safe-area-inset-bottom))}
+    .topbar{align-items:flex-start;gap:12px;margin-bottom:14px}
+    h1{font-size:26px;margin:4px 0 3px}
+    .eyebrow{font-size:10.5px}
+    .sub{font-size:12.5px}
+    .controls{display:flex;flex-wrap:wrap;gap:8px;width:100%}
+    .seg{flex:1 1 100%;width:100%}
+    .seg button{flex:1;height:42px}
+    .sel{flex:1 1 130px;width:auto;height:44px;font-size:14px}
+    .sel.year{width:auto}
+    .controls .btn.primary{flex:1 1 100%;height:44px;font-size:14px}
+
+    .banner{padding:11px 12px;font-size:12px;border-radius:12px;margin-bottom:12px;line-height:1.45}
+    .banner-actions,.banner .banner-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;width:100%}
+    .banner-actions .btn{height:42px;font-size:12.5px;padding:0 8px;justify-content:center;white-space:nowrap}
+    .banner-actions .sync-badge{grid-column:1/-1;height:44px;font-size:14px}
+
+    .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .kpi{padding:13px 12px 13px 15px;border-radius:14px}
+    .kpi .label{font-size:11px;gap:5px}
+    .kpi .label svg{width:13px;height:13px}
+    .kpi .val{font-size:20px;margin-top:4px}
+    .kpi .note{font-size:11px;line-height:1.35}
+
+    .card{padding:14px 12px;border-radius:15px;margin-top:12px!important}
+    .card-head{margin-bottom:10px;gap:8px}
+    h2{font-size:14.5px}
+    .op-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .op-actions .btn{height:44px;justify-content:center}
+    .op-list{max-height:340px;margin:0 -2px}
+    .op{padding:10px 2px;gap:10px}
+    .op-ico{width:38px;height:38px;border-radius:12px}
+    .op-name{font-size:14px}
+    .op-sub{font-size:11px;line-height:1.35}
+    .op-amt{font-size:14px}
+    .del{width:34px;height:34px;font-size:20px;display:grid;place-items:center;padding:0}
+
+    .grid2{grid-template-columns:1fr;gap:12px}
+    .grid2 > .card{min-width:0}
+    .chart{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px;padding:0 2px 4px}
+    #barChart svg{min-width:620px}
+    #flowChart svg{min-width:520px}
+    .donut-wrap{flex-direction:column;align-items:stretch;gap:12px}
+    .donut{flex:0 0 auto;max-width:170px;margin:0 auto}
+    .donut-legend{display:grid;grid-template-columns:1fr;gap:5px;min-width:0}
+    .donut-legend .row{font-size:12px}
+    .donut-legend .nm{white-space:normal}
+
+    .tbl{font-size:12.5px}
+    .tbl th{padding:8px 7px;font-size:10px}
+    .tbl td{padding:8px 7px}
+    .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -6px;padding:0 6px 4px;scrollbar-width:thin}
+    .scroll .tbl th:first-child,.scroll .tbl td:first-child{position:sticky;left:0;z-index:2;background:#fff}
+    .scroll .tbl thead th:first-child{z-index:4}
+    .scroll .tbl tfoot td:first-child{background:#fbfcff;z-index:2}
+    .tbl.inputs{min-width:980px}
+    .cell{font-size:16px;padding:8px 5px;min-width:50px}
+    .cell.plan{background:#f8fafc}
+
+    .money-grid{gap:18px}
+    .money-col{min-width:0}
+    .money-row{padding:5px 0}
+    .money-name{font-size:15px;padding:8px 6px}
+    .money-in{width:120px;font-size:16px;padding:8px 6px}
+    .money-total b{font-size:18px}
+    .dbt-name,.dbt-in{font-size:16px;padding:7px 6px}
+
+    .inv-h{margin-top:16px}
+    .inv-h .btn{height:40px}
+    .pays{grid-template-columns:1fr}
+    .pay{padding:10px 12px;font-size:13px}
+    .tips{display:none}
+    .foot{font-size:11.5px;margin-top:20px;line-height:1.5}
+    .save-dot,.sync-state{font-size:11.5px}
+
+    /* инвестиции — карточками, без горизонтальной прокрутки */
+    #invStocks table,#invBonds table{display:block;font-size:12px;min-width:0}
+    #invStocks thead,#invBonds thead{display:none}
+    #invStocks tbody,#invBonds tbody{display:block}
+    #invStocks tr,#invBonds tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;padding:12px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:#fbfcff;position:relative}
+    #invStocks td,#invBonds td{display:block;border:0;padding:0;position:static;left:auto;background:transparent}
+    #invStocks td::before,#invBonds td::before{content:attr(data-label);display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin-bottom:3px}
+    #invStocks td:nth-child(1),#invBonds td:nth-child(1){grid-column:1/-1;padding-right:36px}
+    #invStocks td:nth-child(2),#invBonds td:nth-child(2){grid-column:1/-1}
+    #invBonds td:nth-child(7){grid-column:1/-1}
+    #invStocks td:nth-child(1)::before,#invStocks td:nth-child(2)::before,
+    #invBonds td:nth-child(1)::before,#invBonds td:nth-child(2)::before{display:none}
+    #invStocks td:last-child,#invBonds td:last-child{position:absolute;top:8px;right:8px;width:34px;height:34px;display:grid;place-items:center}
+    #invStocks td:last-child::before,#invBonds td:last-child::before{display:none}
+    #invStocks .inv-in,#invBonds .inv-in{font-size:16px;padding:8px 7px;border:1px solid var(--line);background:#fff;border-radius:8px;min-height:40px}
+    #invStocks .inv-in.inv-name,#invBonds .inv-in.inv-name{font-size:16px;font-weight:700;border-color:transparent;background:transparent;padding-left:0}
+    #invStocks .inv-in.inv-ticker,#invBonds .inv-in.inv-ticker{font-size:15px;border-color:transparent;background:transparent;padding-left:0}
+    #invBonds .inv-in.inv-date{font-size:15px}
+    #invStocks .inv-in.inv-every,#invBonds .inv-in.inv-every{font-size:15px}
+    #invStocks .inv-val,#invBonds .inv-val{font-size:13.5px;font-weight:700;padding-top:4px}
+    .inv-empty{font-size:12.5px;line-height:1.45}
+    .scroll > #invStocks,.scroll > #invBonds{overflow:visible}
+
+    /* окна — снизу, как в приложении */
+    .modal{align-items:flex-end;padding:0}
+    .modal-card{width:100%;max-width:none;max-height:94vh;border-radius:20px 20px 0 0;padding:20px 16px calc(18px + env(safe-area-inset-bottom))}
+    .modal input,.modal select{font-size:16px;padding:12px}
+    .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .modal-actions .btn{height:46px}
+    #syncModal .modal-actions .btn{height:44px;font-size:12.5px;padding:0 8px;justify-content:center}
+    #syncModal .modal-actions .btn.primary{grid-column:1/-1}
+
+    /* нижняя панель быстрых действий */
+    .mobilebar{display:grid;grid-template-columns:48px 48px 1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:70;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);border-top:1px solid var(--line);backdrop-filter:blur(12px)}
+    .mb-btn{border:0;border-radius:13px;height:48px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation}
+    .mb-top{background:#eef2ff;color:#4338ca;font-size:18px}
+    .mb-sync{background:#eef2ff;color:#4338ca;font-size:19px}
+    .mb-in{background:#0f9d58;color:#fff;box-shadow:0 8px 18px -10px rgba(15,157,88,.8)}
+    .mb-exp{background:#e11d48;color:#fff;box-shadow:0 8px 18px -10px rgba(225,29,72,.8)}
+    .toast{bottom:calc(78px + env(safe-area-inset-bottom));max-width:calc(100% - 24px);text-align:center}
   }
 
   /* ---------- печать ---------- */
@@ -418,7 +539,7 @@
       <h2>Бюджет и факт</h2>
       <span class="hint" id="budgetHint"></span>
     </div>
-    <div id="budgetTable"></div>
+    <div class="scroll"><div id="budgetTable"></div></div>
   </section>
 
   <section class="grid2">
@@ -433,7 +554,7 @@
     </div>
     <div class="card">
       <div class="card-head"><h2>По кварталам</h2></div>
-      <div id="quarterTable"></div>
+      <div class="scroll"><div id="quarterTable"></div></div>
     </div>
   </section>
 
@@ -453,7 +574,7 @@
       </div>
       <div class="money-col">
         <h3>Кредиты, долги, ипотека</h3>
-        <div id="debtTable"></div>
+        <div class="scroll"><div id="debtTable"></div></div>
         <button class="btn no-print" id="addDebt" type="button" style="margin-top:12px">+ Добавить кредит</button>
         <div class="hint" style="margin-top:10px" id="debtNote"></div>
       </div>
@@ -508,6 +629,13 @@
 
   <div class="foot">Отчёт сформирован в браузере · данные хранятся в браузере, а при включённой синхронизации — в вашем облаке Supabase · для PDF нажмите «Печать / PDF» и выберите «Сохранить как PDF»</div>
 </div>
+
+<nav class="mobilebar no-print" aria-label="Быстрые действия">
+  <button class="mb-btn mb-top" id="fabTop" type="button" aria-label="Наверх">↑</button>
+  <button class="mb-btn mb-sync" id="fabSync" type="button" aria-label="Синхронизация">⟳</button>
+  <button class="mb-btn mb-in" id="fabIncome" type="button">+ Доход</button>
+  <button class="mb-btn mb-exp" id="fabExpense" type="button">− Трата</button>
+</nav>
 
 <div class="modal no-print" id="opModal" hidden>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="opTitle">
@@ -1455,19 +1583,19 @@ function invInput(i, f, val, cls, extra) {
 
 function profitCell(i, it) {
   const pf = (it.qty || 0) * ((it.price || 0) - (it.buyPrice || 0));
-  return '<td class="r inv-val ' + (pf < 0 ? 'neg' : pf > 0 ? 'pos' : '') + '" id="iv-prof-' + i + '">' + fmtProfit(pf) + '</td>';
+  return '<td data-label="Прибыль" class="r inv-val ' + (pf < 0 ? 'neg' : pf > 0 ? 'pos' : '') + '" id="iv-prof-' + i + '">' + fmtProfit(pf) + '</td>';
 }
 
 function stockRow(it, i) {
   return '<tr>' +
-    '<td>' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="Название"') + '</td>' +
-    '<td>' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SBER"') + '</td>' +
-    '<td>' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
-    '<td>' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
-    '<td>' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
-    '<td class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
+    '<td data-label="Название">' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="Название"') + '</td>' +
+    '<td data-label="Тикер">' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SBER"') + '</td>' +
+    '<td data-label="Кол-во">' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Цена покупки">' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Текущая цена">' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Стоимость" class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
     profitCell(i, it) +
-    '<td><button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
+    '<td data-label="">' + '<button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
   '</tr>';
 }
 
@@ -1475,17 +1603,17 @@ function bondRow(it, i) {
   const every = [[1, '1 мес'], [3, '3 мес'], [6, '6 мес'], [12, '12 мес']]
     .map(x => '<option value="' + x[0] + '"' + (+it.couponEvery === x[0] ? ' selected' : '') + '>' + x[1] + '</option>').join('');
   return '<tr>' +
-    '<td>' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="ОФЗ 26238"') + '</td>' +
-    '<td>' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SU26238RMFS4"') + '</td>' +
-    '<td>' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
-    '<td>' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
-    '<td>' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
-    '<td>' + invInput(i, 'coupon', fmtPrice(it.coupon), '', 'inputmode="decimal" placeholder="₽/шт"') + '</td>' +
-    '<td><input class="inv-in inv-date" type="date" data-ii="' + i + '" data-if="couponDate" value="' + esc(it.couponDate) + '" title="Дата ближайшей выплаты"></td>' +
-    '<td><select class="inv-in inv-every" data-ii="' + i + '" data-if="couponEvery">' + every + '</select></td>' +
-    '<td class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
+    '<td data-label="Название">' + invInput(i, 'name', it.name, 'inv-name', 'placeholder="ОФЗ 26238"') + '</td>' +
+    '<td data-label="Тикер">' + invInput(i, 'ticker', it.ticker, 'inv-ticker', 'placeholder="SU26238RMFS4"') + '</td>' +
+    '<td data-label="Кол-во">' + invInput(i, 'qty', fmtQty(it.qty), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Цена покупки">' + invInput(i, 'buyPrice', fmtPrice(it.buyPrice), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Текущая цена">' + invInput(i, 'price', fmtPrice(it.price), '', 'inputmode="decimal"') + '</td>' +
+    '<td data-label="Купон ₽/шт">' + invInput(i, 'coupon', fmtPrice(it.coupon), '', 'inputmode="decimal" placeholder="₽/шт"') + '</td>' +
+    '<td data-label="Дата купона"><input class="inv-in inv-date" type="date" data-ii="' + i + '" data-if="couponDate" value="' + esc(it.couponDate) + '" title="Дата ближайшей выплаты"></td>' +
+    '<td data-label="Период"><select class="inv-in inv-every" data-ii="' + i + '" data-if="couponEvery">' + every + '</select></td>' +
+    '<td data-label="Стоимость" class="r inv-val" id="iv-val-' + i + '">' + fmtMoney((it.qty || 0) * (it.price || 0)) + '</td>' +
     profitCell(i, it) +
-    '<td><button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
+    '<td data-label="">' + '<button class="del no-print" data-invdel="' + i + '" type="button" title="Удалить">&times;</button></td>' +
   '</tr>';
 }
 
@@ -1855,6 +1983,16 @@ function closeOp() {
 
 document.getElementById('addIncome').addEventListener('click', () => openOp('in'));
 document.getElementById('addExpense').addEventListener('click', () => openOp('exp'));
+
+/* нижняя панель быстрых действий (мобильная версия) */
+const fabIncome = document.getElementById('fabIncome');
+const fabExpense = document.getElementById('fabExpense');
+const fabTop = document.getElementById('fabTop');
+const fabSync = document.getElementById('fabSync');
+if (fabIncome) fabIncome.addEventListener('click', () => openOp('in'));
+if (fabExpense) fabExpense.addEventListener('click', () => openOp('exp'));
+if (fabTop) fabTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+if (fabSync) fabSync.addEventListener('click', openSyncModal);
 document.getElementById('opCancel').addEventListener('click', closeOp);
 document.getElementById('opClose').addEventListener('click', closeOp);
 document.getElementById('opModal').addEventListener('click', e => {
