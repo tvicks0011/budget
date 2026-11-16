@@ -891,7 +891,9 @@ function demoState() {
     ops: [],
     investments: [],
     invCash: 0,
-    invUpdatedAt: 0
+    invUpdatedAt: 0,
+    habits: [],
+    tasks: []
   };
 }
 
@@ -986,6 +988,8 @@ function normalize(s) {
       return op;
     });
   }
+  out.habits = Array.isArray(s.habits) ? s.habits.slice(0, 30) : [];
+  out.tasks = Array.isArray(s.tasks) ? s.tasks.slice(0, 200) : [];
   out.invCash = Math.max(0, Math.round(num(s.invCash, 0)));
   if (Array.isArray(s.investments)) {
     out.investments = s.investments.slice(0, 100).map((v, i) => {
@@ -2740,7 +2744,9 @@ function syncData() {
     ops: state.ops,
     investments: state.investments,
     invCash: state.invCash,
-    invUpdatedAt: state.invUpdatedAt
+    invUpdatedAt: state.invUpdatedAt,
+    habits: state.habits,
+    tasks: state.tasks
   };
 }
 
