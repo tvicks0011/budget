@@ -752,7 +752,8 @@ function demoState() {
     invCash: 0,
     invUpdatedAt: 0,
     habits: [],
-    tasks: []
+    tasks: [],
+    journal: {}
   };
 }
 
@@ -849,6 +850,24 @@ function normalize(s) {
   }
   out.habits = Array.isArray(s.habits) ? s.habits.slice(0, 30) : [];
   out.tasks = Array.isArray(s.tasks) ? s.tasks.slice(0, 200) : [];
+  if (s.journal && typeof s.journal === 'object' && !Array.isArray(s.journal)) {
+    const journal = {};
+    Object.keys(s.journal).slice(0, 800).forEach(k => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) return;
+      const j = s.journal[k];
+      if (!j || typeof j !== 'object') return;
+      const mood = ['good', 'calm', 'tired', 'hard'].indexOf(j.mood) >= 0 ? j.mood : '';
+      const note = String(j.note || '').slice(0, 400);
+      const tags = Array.isArray(j.tags)
+        ? j.tags.slice(0, 8).map(x => String(x || '').trim().slice(0, 24)).filter(Boolean)
+        : [];
+      if (!mood && !note && !tags.length) return;
+      journal[k] = { mood, note, tags };
+    });
+    out.journal = journal;
+  } else {
+    out.journal = {};
+  }
   out.invCash = Math.max(0, Math.round(num(s.invCash, 0)));
   if (Array.isArray(s.investments)) {
     out.investments = s.investments.slice(0, 100).map((v, i) => {
@@ -2605,7 +2624,8 @@ function syncData() {
     invCash: state.invCash,
     invUpdatedAt: state.invUpdatedAt,
     habits: state.habits,
-    tasks: state.tasks
+    tasks: state.tasks,
+    journal: state.journal
   };
 }
 

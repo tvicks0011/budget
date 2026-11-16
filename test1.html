@@ -516,6 +516,207 @@
     .toast{bottom:calc(78px + env(safe-area-inset-bottom));max-width:calc(100% - 24px);text-align:center}
   }
 
+  /* ---------- навигация по разделам ---------- */
+  .appnav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .appnav .brand{font-weight:800;font-size:13px;letter-spacing:.02em;color:var(--muted);text-transform:uppercase}
+  .appnav .pills{display:inline-flex;background:#e9edf6;padding:4px;border-radius:12px;gap:2px}
+  .appnav .pill{border:0;background:transparent;padding:7px 15px;border-radius:9px;font:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .appnav .pill:hover{color:var(--ink)}
+  .appnav .pill[aria-current="page"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,23,42,.16)}
+  body.life-view{background:#0b1120}
+  body.life-view .mobilebar{display:none!important}
+
+  /* ---------- страница «Привычки и время» ---------- */
+  #viewLife{
+    --lv-bg:#0d1424; --lv-card:#151f33; --lv-card2:#1b2740; --lv-ink:#e6edf7; --lv-muted:#8fa3bf;
+    --lv-line:#243149; --lv-accent:#7c6cff; --lv-green:#2dd4a7; --lv-warn:#fbbf24; --lv-pink:#f472b6;
+    background:radial-gradient(900px 380px at 88% -8%, rgba(124,108,255,.20) 0%, rgba(13,20,36,0) 62%), var(--lv-bg);
+    color:var(--lv-ink);border-radius:26px;padding:22px 24px 26px;
+    box-shadow:0 22px 60px rgba(0,0,0,.45)
+  }
+  .lv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .lv-eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--lv-accent)}
+  .lv-head h1{font-size:29px;line-height:1.1;margin:7px 0 5px;letter-spacing:-.03em;color:var(--lv-ink)}
+  .lv-sub{color:var(--lv-muted);font-size:13px}
+  .lv-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .lv-btn{border:1px solid var(--lv-line);background:var(--lv-card2);color:var(--lv-ink);border-radius:10px;padding:0 13px;height:36px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .lv-btn:hover{border-color:var(--lv-accent)}
+  .lv-btn:focus-visible{outline:2px solid var(--lv-accent);outline-offset:2px}
+  .lv-btn.primary{background:var(--lv-accent);border-color:transparent;color:#fff}
+  .lv-btn.primary:hover{background:#6b5bf5}
+  .lv-btn.ghost{background:transparent}
+  .lv-grid{display:grid;gap:14px;margin-bottom:14px}
+  .lv-g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .lv-g2{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr)}
+  .lv-card{background:var(--lv-card);border:1px solid var(--lv-line);border-radius:18px;padding:14px 16px;min-width:0}
+  .lv-ch{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .lv-ch h2{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--lv-muted);margin:0;font-weight:800}
+  .lv-ch .meta{font-size:11.5px;color:var(--lv-muted);font-variant-numeric:tabular-nums}
+  .lv-kpi{border-left:3px solid var(--lv-accent)}
+  .lv-kpi.b{border-left-color:var(--lv-green)}
+  .lv-kpi.c{border-left-color:var(--lv-warn)}
+  .lv-kpi.d{border-left-color:var(--lv-pink)}
+  .lv-kpi .t{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--lv-muted);font-weight:800}
+  .lv-kpi .v{font-size:23px;font-weight:800;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.18}
+  .lv-kpi .s{font-size:11px;color:var(--lv-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .lv-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .lv-cal .wd{font-size:9px;text-align:center;color:var(--lv-muted);font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding-bottom:2px}
+  .lv-cal button{height:36px;border-radius:9px;border:1px solid transparent;background:rgba(143,163,191,.09);color:var(--lv-ink);font:inherit;font-size:12px;font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums;padding:0}
+  .lv-cal button:hover{border-color:rgba(124,108,255,.65)}
+  .lv-cal button.l1{background:rgba(45,212,167,.2)}
+  .lv-cal button.l2{background:rgba(45,212,167,.45)}
+  .lv-cal button.l3{background:rgba(45,212,167,.72);color:#04241a}
+  .lv-cal button.off{background:transparent;color:var(--lv-muted);opacity:.32;cursor:default;border-color:transparent}
+  .lv-cal button.future{opacity:.55}
+  .lv-cal button.today{box-shadow:inset 0 0 0 2px var(--lv-accent)}
+  .lv-cal button.sel{outline:2px solid var(--lv-accent);outline-offset:1px}
+
+  .lv-bars{display:flex;align-items:flex-end;gap:8px;height:132px;padding-top:4px}
+  .lv-bars .lb{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%;background:transparent}
+  .lv-bars .fill{background:linear-gradient(180deg,#8b7bff,#5b4bd0);border-radius:7px 7px 3px 3px;min-height:3px}
+  .lv-bars .lb:nth-child(3n) .fill{background:linear-gradient(180deg,#2dd4a7,#16856a)}
+  .lv-bars .lbl{font-size:8.5px;color:var(--lv-muted);text-align:center;margin-top:6px;font-weight:700;white-space:nowrap;overflow:hidden}
+  .lv-bars .lb.now .fill{box-shadow:0 0 0 2px rgba(124,108,255,.55)}
+
+  .lv-hb{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--lv-line)}
+  .lv-hb:first-child{border-top:0;padding-top:0}
+  .lv-hb .nm{flex:1 1 150px;min-width:0}
+  .lv-hb .nm b{font-size:13.5px;font-weight:700;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lv-hb .nm small{display:block;font-size:11px;color:var(--lv-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lv-pill{font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:1.5px}
+  .lv-pill.good{background:rgba(45,212,167,.18);color:var(--lv-green)}
+  .lv-pill.bad{background:rgba(244,114,182,.18);color:var(--lv-pink)}
+  .lv-goal{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+  .lv-goal .bar{width:64px;height:6px;border-radius:99px;background:rgba(143,163,191,.22);overflow:hidden}
+  .lv-goal .bar i{display:block;height:100%;border-radius:99px;background:var(--lv-green)}
+  .lv-goal .bar i.bad{background:var(--lv-pink)}
+  .lv-goal select{height:30px;border-radius:8px;border:1px solid var(--lv-line);background:var(--lv-card2);color:var(--lv-ink);font:inherit;font-size:11px;font-weight:700;padding:0 4px;cursor:pointer}
+  .lv-days{display:flex;gap:4px;flex:0 0 auto}
+  .lv-days button{width:28px;height:30px;border-radius:8px;border:1px solid var(--lv-line);background:transparent;color:var(--lv-muted);font:inherit;font-size:10px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1;padding:0}
+  .lv-days button span{font-size:7.5px;text-transform:uppercase;letter-spacing:.02em}
+  .lv-days button.on{background:var(--lv-green);border-color:transparent;color:#04241a}
+  .lv-days button.today{box-shadow:inset 0 0 0 2px var(--lv-accent)}
+  .lv-days button:hover{border-color:var(--lv-accent)}
+  .lv-x{width:30px;height:30px;flex:0 0 auto;border-radius:8px;border:1px solid var(--lv-line);background:transparent;color:var(--lv-muted);font-size:16px;line-height:1;cursor:pointer;padding:0}
+  .lv-x:hover{border-color:rgba(244,114,182,.6);color:var(--lv-pink)}
+
+  .lv-form{display:flex;gap:8px;flex-wrap:wrap}
+  .lv-form input,.lv-form select{border:1px solid var(--lv-line);background:var(--lv-card2);color:var(--lv-ink);border-radius:10px;padding:0 11px;height:38px;font:inherit;font-size:13px;min-width:0}
+  .lv-form input::placeholder{color:rgba(143,163,191,.7)}
+  .lv-form input:focus,.lv-form select:focus,.lv-note:focus{outline:none;border-color:var(--lv-accent);box-shadow:0 0 0 3px rgba(124,108,255,.22)}
+  .lv-form input[type=text]{flex:1 1 200px}
+  .lv-form input[type=date],.lv-form input[type=time]{flex:0 1 132px}
+  .lv-form select{flex:0 1 auto}
+  .lv-form .lv-btn{height:38px}
+
+  .lv-hours-scroll{overflow-x:auto;overflow-y:hidden;margin:0 -4px;padding:0 4px 4px;scrollbar-width:thin}
+  .lv-hours{display:grid;grid-template-columns:28px repeat(7,minmax(62px,1fr));gap:4px;min-width:520px}
+  .lv-hours .top{font-size:9.5px;font-weight:800;color:var(--lv-muted);text-align:center;text-transform:uppercase;letter-spacing:.03em;padding-bottom:4px}
+  .lv-hours .top b{display:block;font-size:11px;color:var(--lv-ink);letter-spacing:0;margin-top:1px}
+  .lv-hours .hh{font-size:9px;color:var(--lv-muted);text-align:right;padding-right:2px;font-weight:700;font-variant-numeric:tabular-nums}
+  .lv-hours .hh-labels{position:relative;height:224px}
+  .lv-hours .hh-labels span{position:absolute;right:0;font-size:9px;color:var(--lv-muted);font-weight:700;font-variant-numeric:tabular-nums;transform:translateY(-4px)}
+  .lv-task.flash{background:rgba(124,108,255,.16);border-radius:10px}
+  .lv-hours .col{position:relative;height:224px;border-radius:9px;background:rgba(143,163,191,.07);
+    background-image:repeating-linear-gradient(to bottom,rgba(143,163,191,.12) 0 1px,transparent 1px 28px)}
+  .lv-hours .col.today{box-shadow:inset 0 0 0 1px rgba(124,108,255,.55)}
+  .lv-hours .ev{position:absolute;left:2px;right:2px;border-radius:6px;padding:2px 4px;overflow:hidden;font-size:8.5px;line-height:1.2;font-weight:800;color:#fff;cursor:pointer;border:1px solid transparent;text-align:left}
+  .lv-hours .ev.work{background:#6d5efc}
+  .lv-hours .ev.study{background:#0ea5e9}
+  .lv-hours .ev.health{background:#10b981}
+  .lv-hours .ev.home{background:#f59e0b;color:#3a2500}
+  .lv-hours .ev.rest{background:#ec4899}
+  .lv-hours .ev.other{background:#64748b}
+  .lv-hours .ev.done{opacity:.5;text-decoration:line-through}
+  .lv-hours .ev.conflict{outline:2px solid #fb7185;outline-offset:0}
+  .lv-hours .ev b{display:block;font-size:8px;opacity:.9}
+  .lv-hours .ev .tt{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lv-hours .ev.short{display:flex;align-items:center;gap:3px;padding:0 3px}
+  .lv-hours .ev.short b{display:inline;font-size:8px}
+  .lv-hours .ev.short .tt{display:none}
+
+  .lv-mood{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .lv-mood button{border:1px solid var(--lv-line);background:transparent;color:var(--lv-muted);border-radius:99px;padding:5px 11px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+  .lv-mood button.on{background:rgba(251,191,36,.18);border-color:rgba(251,191,36,.55);color:var(--lv-warn)}
+  .lv-note{width:100%;min-height:92px;resize:vertical;border:1px solid var(--lv-line);background:var(--lv-card2);color:var(--lv-ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:13px;line-height:1.5}
+  .lv-note::placeholder{color:rgba(143,163,191,.7)}
+  .lv-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .lv-tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:3px 5px 3px 9px;border-radius:99px;background:rgba(124,108,255,.18);color:#c7c0ff}
+  .lv-tag button{border:0;background:transparent;color:inherit;font-size:12px;line-height:1;cursor:pointer;padding:0 2px;opacity:.75}
+  .lv-tag button:hover{opacity:1}
+  .lv-tag-in{display:flex;gap:6px;margin-top:9px}
+  .lv-tag-in input{flex:1;min-width:0;height:32px;border:1px dashed var(--lv-line);background:transparent;color:var(--lv-ink);border-radius:9px;padding:0 10px;font:inherit;font-size:12px}
+
+  .lv-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .lv-filter{border:1px solid var(--lv-line);background:transparent;color:var(--lv-muted);border-radius:99px;padding:5px 11px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+  .lv-filter.on{background:rgba(124,108,255,.2);border-color:rgba(124,108,255,.55);color:#cfc9ff}
+  .lv-filter b{font-weight:800;color:inherit;opacity:.75;margin-left:4px}
+  .lv-task{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--lv-line)}
+  .lv-task:last-child{border-bottom:0}
+  .lv-task-time{flex:0 0 46px;font-size:12.5px;font-weight:800;color:#a9a1ff;font-variant-numeric:tabular-nums}
+  .lv-task-main{flex:1;min-width:0}
+  .lv-task-name{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lv-task.done .lv-task-name{text-decoration:line-through;color:var(--lv-muted);font-weight:400}
+  .lv-task-sub{font-size:10.5px;color:var(--lv-muted);margin-top:2px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .lv-chip{font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:99px;background:rgba(143,163,191,.16);color:var(--lv-muted)}
+  .lv-chip.high{background:rgba(251,191,36,.16);color:var(--lv-warn)}
+  .lv-chip.rep{background:rgba(124,108,255,.18);color:#c7c0ff}
+  .lv-task-done{width:30px;height:30px;flex:0 0 auto;border-radius:50%;border:1px solid var(--lv-line);background:transparent;color:var(--lv-muted);font-size:13px;cursor:pointer;padding:0}
+  .lv-task-done:hover{border-color:var(--lv-green);color:var(--lv-green)}
+  .lv-task.done .lv-task-done{background:rgba(45,212,167,.2);border-color:rgba(45,212,167,.55);color:var(--lv-green)}
+  .lv-group{margin-top:14px}
+  .lv-group:first-child{margin-top:0}
+  .lv-group-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--lv-muted);padding-bottom:6px;border-bottom:1px solid var(--lv-line)}
+  .lv-group-h b{font-size:11px;font-weight:700;color:#a9a1ff;text-transform:none;letter-spacing:0}
+  .lv-empty{padding:20px 8px;text-align:center;color:var(--lv-muted);font-size:12.5px;line-height:1.55}
+  .lv-empty b{color:var(--lv-ink)}
+
+  /* ---------- вторая страница на телефоне ---------- */
+  @media screen and (max-width: 820px){
+    .appnav{gap:8px;margin-bottom:12px}
+    .appnav .brand{display:none}
+    .appnav .pills{flex:1;display:grid;grid-template-columns:1fr 1fr;width:100%}
+    .appnav .pill{height:38px;padding:0 8px;font-size:12.5px;text-align:center}
+    #viewLife{padding:16px 13px 22px;border-radius:20px}
+    .lv-head{gap:12px;margin-bottom:14px}
+    .lv-head h1{font-size:24px}
+    .lv-sub{font-size:12px}
+    .lv-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .lv-btn{height:40px}
+    .lv-grid{gap:10px;margin-bottom:10px}
+    .lv-g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .lv-g2{grid-template-columns:minmax(0,1fr)}
+    .lv-card{padding:13px;border-radius:15px}
+    .lv-kpi .t{font-size:9.5px;line-height:1.3}
+    .lv-kpi .v{font-size:18px;white-space:nowrap}
+    .lv-kpi .s{font-size:10px;line-height:1.35;white-space:normal;overflow:visible}
+    .lv-ch{gap:6px}
+    .lv-ch h2{font-size:10px}
+    .lv-cal button{height:34px;font-size:12.5px}
+    .lv-bars{gap:5px;height:112px}
+    .lv-hb{flex-wrap:wrap;gap:8px;padding:11px 0}
+    .lv-hb .nm{flex:1 1 calc(100% - 40px)}
+    .lv-days{order:3;flex:1 1 100%;gap:4px}
+    .lv-days button{flex:1 1 0;width:auto;height:36px;font-size:11px}
+    .lv-goal{order:4;flex:1 1 100%;justify-content:space-between;gap:8px}
+    .lv-goal .bar{flex:1 1 auto;width:auto}
+    .lv-goal select{flex:0 0 auto;height:32px;font-size:12px}
+    .lv-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .lv-form input[type=text]{grid-column:1/-1;flex:none}
+    .lv-form input,.lv-form select{width:100%;height:42px;font-size:15px;flex:none}
+    .lv-form .lv-btn{grid-column:1/-1;height:42px}
+    .lv-hours{min-width:540px}
+    .lv-mood button{flex:1;padding:7px 6px;text-align:center}
+    .lv-note{min-height:110px;font-size:16px}
+    .lv-filters{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;margin:0 -13px 12px;padding-left:13px;padding-right:13px;scrollbar-width:thin}
+    .lv-filter{flex:0 0 auto}
+    .lv-task{padding:10px 0;gap:8px}
+    .lv-task-time{flex-basis:42px;font-size:12px}
+    .lv-task-done{width:34px;height:34px}
+    .lv-tag-in input{height:38px;font-size:15px}
+  }
+
   /* ---------- печать ---------- */
   @page{size:A4;margin:11mm}
   @media print{
@@ -583,12 +784,67 @@
     .lt-empty{padding:10px}
     .lt-form{display:none!important}
     #lifeCard{break-before:page;break-inside:auto}
+    /* вторая страница на печати — светлая */
+    .appnav{display:none!important}
+    body.life-view{background:#fff}
+    #viewLife{--lv-bg:#fff;--lv-card:#fff;--lv-card2:#fff;--lv-ink:#000;--lv-muted:#555;
+      --lv-line:#e2e8f0;--lv-accent:#4338ca;--lv-green:#0f766e;--lv-warn:#b45309;--lv-pink:#be123c;
+      background:#fff;box-shadow:none;padding:0;border-radius:0}
+    .lv-head{margin-bottom:10px}
+    .lv-head h1{font-size:21px}
+    .lv-sub,.lv-eyebrow,.lv-ch .meta{color:#555}
+    .lv-grid{gap:8px;margin-bottom:8px}
+    .lv-card{padding:11px 13px;border-radius:10px;box-shadow:none;break-inside:avoid}
+    .lv-kpi .v{font-size:15px}
+    .lv-kpi .t,.lv-kpi .s{color:#555}
+    .lv-cal button{height:26px;font-size:10px}
+    .lv-cal .wd{font-size:8px}
+    .lv-bars{height:92px}
+    .lv-bars .lbl{font-size:8px;color:#555}
+    .lv-hb{padding:6px 0;gap:8px}
+    .lv-hb .nm b{font-size:11.5px}
+    .lv-hb .nm small{font-size:9px;color:#555}
+    .lv-days button{width:22px;height:24px;font-size:9px;border-color:#d8dee9}
+    .lv-days button.on{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
+    .lv-goal .bar{background:#e5e7eb}
+    .lv-goal .bar i{background:#0f766e}
+    .lv-goal select{font-size:9px;height:24px}
+    .lv-hours{min-width:0}
+    .lv-hours .top,.lv-hours .hh-labels span,.lv-hours .hh{color:#555}
+    .lv-hours .ev{color:#fff}
+    .lv-task-time{color:#4338ca}
+    .lv-task-name{font-size:11.5px}
+    .lv-task-sub{font-size:9px;color:#555}
+    .lv-chip{background:#eef2ff;color:#3730a3}
+    .lv-chip.high{background:#fef3c7;color:#92400e}
+    .lv-chip.rep{background:#ede9fe;color:#5b21b6}
+    .lv-tag{background:#eef2ff;color:#3730a3}
+    .lv-tag button,.lv-x,.lv-task-done,.lv-btn{display:none!important}
+    .lv-mood button{font-size:9.5px;padding:3px 8px;border-color:#d8dee9;color:#555}
+    .lv-mood button.on{background:#fef3c7;border-color:#fcd34d;color:#92400e}
+    .lv-note{min-height:56px;border:1px solid #e2e8f0;background:#fff;color:#000;font-size:10.5px}
+    .lv-group{margin-top:9px}
+    .lv-group-h{color:#555;border-color:#e2e8f0}
+    .lv-group-h b{color:#4338ca}
+    .lv-task{border-color:#eef1f6}
+    .lv-empty{color:#555;padding:10px}
+    .lv-task.flash{background:transparent}
     .page-break{break-before:page}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <nav class="appnav no-print" id="appNav" aria-label="Разделы">
+    <span class="brand">Бюджет</span>
+    <div class="pills" role="group">
+      <button class="pill" type="button" data-view="fin" aria-current="page">Финансы</button>
+      <button class="pill" type="button" data-view="life">Привычки и время</button>
+    </div>
+  </nav>
+
+  <div id="viewFinance">
 
   <header class="topbar">
     <div>
@@ -758,35 +1014,84 @@
     <div class="goals" id="goals"></div>
   </section>
 
-  <section class="card" id="lifeCard" style="margin-top:16px">
-    <div class="card-head">
-      <h2>Привычки и время</h2>
-      <div class="lt-tabs no-print" id="lifeTabs" role="tablist" aria-label="Привычки и время">
-        <button class="lt-tab" id="tabHabits" type="button" role="tab" data-lt="habits" aria-selected="true" aria-controls="lifeHabits">Привычки</button>
-        <button class="lt-tab" id="tabTime" type="button" role="tab" data-lt="time" aria-selected="false" aria-controls="lifeTime">Время</button>
-      </div>
-    </div>
 
-    <div id="lifeHabits" role="tabpanel" aria-labelledby="tabHabits">
-      <div class="lt-sub-h">Привычки</div>
-      <div class="lt-stats" id="hbStats"></div>
-      <form class="lt-form no-print" id="habitForm" autocomplete="off">
+  <section class="tips no-print">
+    <div class="tip"><h3>Правило 50 / 30 / 20</h3>До 50% дохода — обязательное (жильё, еда, транспорт), до 30% — желания, минимум <b>20%</b> — сбережения и инвестиции.</div>
+    <div class="tip"><h3>Резервный фонд</h3>Подушка на <b>3–6 месяцев</b> обязательных расходов. Считается по строке «Расходы» минус развлечения и покупки.</div>
+    <div class="tip"><h3>Плати себе первым</h3>Переводите сбережения <b>в день зарплаты</b>, а не «что останется». Остаток в конце месяца — худший способ копить.</div>
+  </section>
+
+  </div><!-- /viewFinance -->
+
+  <div id="viewLife" hidden>
+
+    <header class="lv-head">
+      <div>
+        <div class="lv-eyebrow">Тест 1 · привычки и время</div>
+        <h1>Привычки и время</h1>
+        <div class="lv-sub" id="lifeCaption">—</div>
+      </div>
+      <div class="lv-actions no-print">
+        <button class="lv-btn" id="lifeToday" type="button">Вернуться к сегодня</button>
+        <button class="lv-btn primary" id="lifePrint" type="button">Печать / PDF</button>
+      </div>
+    </header>
+
+    <section class="lv-grid lv-g4" id="lifeKpi"></section>
+
+    <section class="lv-grid lv-g2">
+      <div class="lv-card">
+        <div class="lv-ch"><h2>Календарь привычек</h2><span class="meta" id="calMeta"></span></div>
+        <div class="lv-cal" id="habitCal"></div>
+      </div>
+      <div class="lv-card">
+        <div class="lv-ch"><h2>Выполнение по неделям</h2><span class="meta" id="barsMeta">8 недель</span></div>
+        <div class="lv-bars" id="lifeBars"></div>
+      </div>
+    </section>
+
+    <section class="lv-card" style="margin-bottom:14px">
+      <div class="lv-ch"><h2>Привычки и цели</h2><span class="meta" id="habitWeekLabel"></span></div>
+      <div id="habitList"></div>
+      <form class="lv-form no-print" id="habitForm" autocomplete="off" style="margin-top:12px">
         <input id="habitName" type="text" maxlength="40" placeholder="Новая привычка: зарядка, без сахара…" aria-label="Название привычки">
         <select id="habitKind" aria-label="Тип привычки">
           <option value="good">Полезная</option>
           <option value="bad">Вредная</option>
         </select>
-        <button class="btn primary" type="submit">Добавить</button>
+        <select id="habitGoal" aria-label="Цель на неделю">
+          <option value="0">Без цели</option>
+          <option value="1">1 раз в неделю</option>
+          <option value="2">2 раза в неделю</option>
+          <option value="3">3 раза в неделю</option>
+          <option value="4">4 раза в неделю</option>
+          <option value="5" selected>5 раз в неделю</option>
+          <option value="6">6 раз в неделю</option>
+          <option value="7">Каждый день</option>
+        </select>
+        <button class="lv-btn primary" type="submit">Добавить</button>
       </form>
-      <div class="hint no-print" style="margin:-6px 0 10px">Для полезной привычки отметка — «сделал», для вредной — «день без неё».</div>
-      <div id="habitList"></div>
-    </div>
+      <div class="hint no-print" style="margin-top:8px;color:var(--lv-muted)">Отметка у полезной — «сделал», у вредной — «день без неё». Клик по дню в календаре выше переключает неделю и дневник.</div>
+    </section>
 
-    <div id="lifeTime" role="tabpanel" aria-labelledby="tabTime" hidden>
-      <div class="lt-sub-h">Время и планы</div>
-      <div class="ts-week" id="weekStrip"></div>
-      <div class="lt-stats" id="timeStats"></div>
-      <form class="lt-form no-print" id="taskForm" autocomplete="off">
+    <section class="lv-grid lv-g2">
+      <div class="lv-card">
+        <div class="lv-ch"><h2>Неделя по часам</h2><span class="meta" id="hoursMeta"></span></div>
+        <div class="lv-hours-scroll"><div class="lv-hours" id="hourGrid"></div></div>
+      </div>
+      <div class="lv-card">
+        <div class="lv-ch"><h2>Дневник дня</h2><span class="meta" id="journalDate"></span></div>
+        <div class="lv-mood" id="journalMood"></div>
+        <textarea class="lv-note" id="journalNote" maxlength="400" placeholder="Как прошёл день? Что помогло, что мешало…" aria-label="Заметка дня"></textarea>
+        <div class="lv-tags" id="journalTags"></div>
+        <div class="lv-tag-in no-print"><input id="journalTagInput" maxlength="24" placeholder="Добавить тег и нажать Enter" aria-label="Новый тег дня"></div>
+      </div>
+    </section>
+
+    <section class="lv-card">
+      <div class="lv-ch"><h2>Задачи</h2><span class="meta" id="taskMeta"></span></div>
+      <div class="lv-filters no-print" id="taskFilters"></div>
+      <form class="lv-form no-print" id="taskForm" autocomplete="off">
         <input id="taskTitle" type="text" maxlength="80" placeholder="Задача: планёрка, спортзал, отчёт…" aria-label="Задача">
         <input id="taskDate" type="date" aria-label="Дата задачи">
         <input id="taskTime" type="time" aria-label="Время начала">
@@ -803,19 +1108,20 @@
           <option value="normal">Обычная</option>
           <option value="high">Важная</option>
         </select>
-        <button class="btn primary" type="submit">Добавить</button>
+        <select id="taskCat" aria-label="Категория"></select>
+        <select id="taskRepeat" aria-label="Повтор">
+          <option value="none">Без повтора</option>
+          <option value="day">Каждый день</option>
+          <option value="week">Каждую неделю</option>
+          <option value="month">Каждый месяц</option>
+        </select>
+        <button class="lv-btn primary" type="submit">Добавить</button>
       </form>
-      <div class="hint no-print" style="margin-bottom:4px">Планируйте с запасом: 6–8 часов задач в день — уже плотно. Нажмите на день недели, чтобы выбрать его для новой задачи.</div>
       <div id="taskList"></div>
-      <button class="btn ghost no-print" id="clearDone" type="button" style="margin-top:10px">Убрать выполненные</button>
-    </div>
-  </section>
+      <button class="lv-btn ghost no-print" id="clearDone" type="button" style="margin-top:12px">Убрать выполненные</button>
+    </section>
 
-  <section class="tips no-print">
-    <div class="tip"><h3>Правило 50 / 30 / 20</h3>До 50% дохода — обязательное (жильё, еда, транспорт), до 30% — желания, минимум <b>20%</b> — сбережения и инвестиции.</div>
-    <div class="tip"><h3>Резервный фонд</h3>Подушка на <b>3–6 месяцев</b> обязательных расходов. Считается по строке «Расходы» минус развлечения и покупки.</div>
-    <div class="tip"><h3>Плати себе первым</h3>Переводите сбережения <b>в день зарплаты</b>, а не «что останется». Остаток в конце месяца — худший способ копить.</div>
-  </section>
+  </div><!-- /viewLife -->
 
   <div class="foot">Отчёт сформирован в браузере · данные хранятся в браузере, а при включённой синхронизации — в вашем облаке Supabase · для PDF нажмите «Печать / PDF» и выберите «Сохранить как PDF»</div>
 </div>
@@ -1068,15 +1374,19 @@ function demoState() {
     invCash: 0,
     invUpdatedAt: 0,
     habits: [
-      { id: 'h1', name: 'Зарядка 15 минут', kind: 'good', days: { [isoOffset(-2)]: 1, [isoOffset(-1)]: 1 } },
-      { id: 'h2', name: 'Без сахара', kind: 'bad', days: { [isoOffset(-1)]: 1 } },
-      { id: 'h3', name: 'Чтение 20 минут', kind: 'good', days: {} }
+      { id: 'h1', name: 'Зарядка 15 минут', kind: 'good', goal: 5, days: { [isoOffset(0)]: 1, [isoOffset(-1)]: 1, [isoOffset(-2)]: 1, [isoOffset(-3)]: 1, [isoOffset(-4)]: 1, [isoOffset(-5)]: 1, [isoOffset(-8)]: 1, [isoOffset(-9)]: 1, [isoOffset(-10)]: 1, [isoOffset(-15)]: 1 } },
+      { id: 'h2', name: 'Без сахара', kind: 'bad', goal: 6, days: { [isoOffset(0)]: 1, [isoOffset(-1)]: 1, [isoOffset(-2)]: 1, [isoOffset(-3)]: 1, [isoOffset(-8)]: 1, [isoOffset(-9)]: 1, [isoOffset(-16)]: 1 } },
+      { id: 'h3', name: 'Чтение 20 минут', kind: 'good', goal: 4, days: { [isoOffset(-1)]: 1, [isoOffset(-6)]: 1, [isoOffset(-7)]: 1, [isoOffset(-14)]: 1, [isoOffset(-15)]: 1 } }
     ],
     tasks: [
-      { id: 't1', title: 'Планёрка с командой', date: isoOffset(0), time: '10:00', dur: 30, pri: 'high', done: false },
-      { id: 't2', title: 'Спортзал', date: isoOffset(0), time: '19:00', dur: 60, pri: 'normal', done: false },
-      { id: 't3', title: 'Разобрать отчёт', date: isoOffset(1), time: '11:00', dur: 90, pri: 'high', done: false }
-    ]
+      { id: 't1', title: 'Планёрка с командой', date: isoOffset(0), time: '10:00', dur: 30, pri: 'high', cat: 'work', repeat: 'week', done: true },
+      { id: 't2', title: 'Спортзал', date: isoOffset(0), time: '19:00', dur: 60, pri: 'normal', cat: 'health', repeat: 'week', done: false },
+      { id: 't3', title: 'Разобрать отчёт', date: isoOffset(1), time: '11:00', dur: 90, pri: 'high', cat: 'work', repeat: 'none', done: false },
+      { id: 't4', title: 'Английский', date: isoOffset(1), time: '20:00', dur: 45, pri: 'normal', cat: 'study', repeat: 'day', done: false }
+    ],
+    journal: {
+      [isoOffset(0)]: { mood: 'good', note: 'Зарядка прошла легко, отчёт сдал до обеда. Вечером не хватило сил на чтение — перенёс на утро.', tags: ['энергия', 'работа'] }
+    }
   };
 }
 
@@ -1183,6 +1493,7 @@ function normalize(s) {
         id: String((h && h.id) || ('h' + (i + 1))).slice(0, 40),
         name: String((h && h.name) || '').slice(0, 40),
         kind: h && h.kind === 'bad' ? 'bad' : 'good',
+        goal: Math.max(0, Math.min(7, Math.round(num(h && h.goal, 0)))),
         days
       };
     });
@@ -1197,10 +1508,30 @@ function normalize(s) {
       time: /^\d{2}:\d{2}$/.test(t && t.time) ? t.time : '09:00',
       dur: Math.max(5, Math.min(720, Math.round(num(t && t.dur, 60)))),
       pri: t && t.pri === 'high' ? 'high' : 'normal',
+      cat: String((t && t.cat) || 'other').slice(0, 24),
+      repeat: ['day', 'week', 'month'].indexOf(t && t.repeat) >= 0 ? t.repeat : 'none',
       done: !!(t && t.done)
     }));
   } else {
     out.tasks = [];
+  }
+  if (s.journal && typeof s.journal === 'object' && !Array.isArray(s.journal)) {
+    const journal = {};
+    Object.keys(s.journal).slice(0, 800).forEach(k => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) return;
+      const j = s.journal[k];
+      if (!j || typeof j !== 'object') return;
+      const mood = ['good', 'calm', 'tired', 'hard'].indexOf(j.mood) >= 0 ? j.mood : '';
+      const note = String(j.note || '').slice(0, 400);
+      const tags = Array.isArray(j.tags)
+        ? j.tags.slice(0, 8).map(x => String(x || '').trim().slice(0, 24)).filter(Boolean)
+        : [];
+      if (!mood && !note && !tags.length) return;
+      journal[k] = { mood, note, tags };
+    });
+    out.journal = journal;
+  } else {
+    out.journal = {};
   }
   out.invCash = Math.max(0, Math.round(num(s.invCash, 0)));
   if (Array.isArray(s.investments)) {
@@ -2178,21 +2509,47 @@ async function moexBondCoupon(ticker) {
 }
 
 /* =======================================================================
-   ПРИВЫЧКИ И ВРЕМЯ
+   ПРИВЫЧКИ И ВРЕМЯ — вторая страница
    ======================================================================= */
-let lifeTab = 'habits';
+const TASK_CATS = [
+  { id: 'work',   name: 'Работа' },
+  { id: 'study',  name: 'Учёба' },
+  { id: 'health', name: 'Здоровье' },
+  { id: 'home',   name: 'Дом' },
+  { id: 'rest',   name: 'Отдых' },
+  { id: 'other',  name: 'Прочее' }
+];
+const MOODS = [
+  { id: 'good',  name: 'бодро' },
+  { id: 'calm',  name: 'спокойно' },
+  { id: 'tired', name: 'устал' },
+  { id: 'hard',  name: 'тяжело' }
+];
+const REPEAT_NAME = { none: '', day: 'каждый день', week: 'каждую неделю', month: 'каждый месяц' };
+const DAY_START = 7, DAY_END = 23, HOUR_PX = 14;
 
-function setLifeTab(tab) {
-  lifeTab = tab === 'time' ? 'time' : 'habits';
-  const isTime = lifeTab === 'time';
-  const habitsPanel = $('#lifeHabits'), timePanel = $('#lifeTime');
-  if (!habitsPanel || !timePanel) return;
-  habitsPanel.hidden = isTime;
-  timePanel.hidden = !isTime;
-  $('#tabHabits').setAttribute('aria-selected', String(!isTime));
-  $('#tabTime').setAttribute('aria-selected', String(isTime));
+let lifeDay = todayISO();
+let lifeFilter = 'all';
+let lifeCat = 'all';
+
+const catOf = id => TASK_CATS.find(c => c.id === id) || TASK_CATS[TASK_CATS.length - 1];
+const taskSort = (a, b) => (a.date === b.date
+  ? (a.time === b.time ? 0 : (a.time < b.time ? -1 : 1))
+  : (a.date < b.date ? -1 : 1));
+function dayTitle(iso) {
+  const d = parseDay(iso);
+  const base = d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()];
+  if (iso === todayISO()) return 'Сегодня · ' + base;
+  if (iso === isoOffset(1)) return 'Завтра · ' + base;
+  if (iso === isoOffset(-1)) return 'Вчера · ' + base;
+  return WEEKDAYS_FULL[d.getDay()] + ' · ' + base;
 }
-
+const isoAddDays = (iso, n) => isoDate(shiftDays(parseDay(iso), n));
+const weekOf = iso => {
+  const ws = startOfWeek(parseDay(iso));
+  return Array.from({ length: 7 }, (_, i) => isoDate(shiftDays(ws, i)));
+};
+const weekCount = (h, isos) => isos.reduce((n, d) => n + (h.days[d] ? 1 : 0), 0);
 function habitStreak(h) {
   let n = 0;
   let d = new Date();
@@ -2204,160 +2561,415 @@ function habitStreak(h) {
   }
   return n;
 }
-
-function habitWeekCount(h) {
-  let n = 0;
-  for (let i = 0; i < 7; i++) if (h.days[isoOffset(-i)]) n++;
-  return n;
+const minutesOf = t => {
+  const p = String(t.time || '09:00').split(':');
+  return (+p[0] || 0) * 60 + (+p[1] || 0);
+};
+function isoAddMonths(iso, n) {
+  const d = parseDay(iso), day = d.getDate();
+  const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
+  const last = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate();
+  x.setDate(Math.min(day, last));
+  return isoDate(x);
+}
+function nextRepeatDate(iso, repeat) {
+  if (repeat === 'day') return isoAddDays(iso, 1);
+  if (repeat === 'week') return isoAddDays(iso, 7);
+  if (repeat === 'month') return isoAddMonths(iso, 1);
+  return '';
+}
+function goalOptions(goal) {
+  let s = '<option value="0"' + (goal === 0 ? ' selected' : '') + '>цель: нет</option>';
+  for (let n = 1; n <= 7; n++) s += '<option value="' + n + '"' + (goal === n ? ' selected' : '') + '>' + n + '/нед</option>';
+  return s;
 }
 
-function renderHabits() {
-  const list = $('#habitList'), statsBox = $('#hbStats');
-  if (!list || !statsBox) return;
-  const today = todayISO();
-  const good = state.habits.filter(h => h.kind === 'good').length;
-  const bad = state.habits.filter(h => h.kind === 'bad').length;
-  const doneToday = state.habits.filter(h => h.days[today]).length;
-  let best = null;
+/* ---------- переключение разделов ---------- */
+function setView(view) {
+  const life = view === 'life';
+  const finView = $('#viewFinance'), lifeView = $('#viewLife'), nav = $('#appNav');
+  if (!finView || !lifeView) return;
+  finView.hidden = life;
+  lifeView.hidden = !life;
+  document.body.classList.toggle('life-view', life);
+  if (nav) nav.querySelectorAll('[data-view]').forEach(b => {
+    if (b.dataset.view === view) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
+  if (life) { renderLife(); window.scrollTo(0, 0); }
+}
+function applyHash() {
+  const h = (location.hash || '').replace('#', '').toLowerCase();
+  setView(h === 'life' || h === 'habits' || h === 'time' ? 'life' : 'fin');
+}
+$('#appNav').addEventListener('click', e => {
+  const b = e.target.closest('[data-view]');
+  if (!b) return;
+  location.hash = b.dataset.view === 'life' ? 'life' : 'fin';
+});
+window.addEventListener('hashchange', applyHash);
+
+/* ---------- показатели ---------- */
+function renderLifeCaption() {
+  const el = $('#lifeCaption');
+  if (!el) return;
+  const d = parseDay(lifeDay);
+  const wt = state.tasks.filter(t => weekOf(lifeDay).indexOf(t.date) >= 0).length;
+  el.textContent = MONTHS[d.getMonth()] + ' ' + d.getFullYear() + ' · ' +
+    state.habits.length + ' ' + plural(state.habits.length, 'привычка', 'привычки', 'привычек') + ' · ' +
+    wt + ' ' + plural(wt, 'задача', 'задачи', 'задач') + ' на неделе';
+}
+
+function renderLifeKpi() {
+  const box = $('#lifeKpi');
+  if (!box) return;
+  const today = todayISO(), isos = weekOf(lifeDay);
+  const doneToday = state.habits.filter(h => h.days[lifeDay]).length;
+  const totalHabits = state.habits.length;
+  let best = { name: '', streak: 0 };
   state.habits.forEach(h => {
     const s = habitStreak(h);
-    if (!best || s > best.streak) best = { name: h.name, streak: s };
+    if (s > best.streak) best = { name: h.name, streak: s };
   });
+  const weekTasks = state.tasks.filter(t => isos.indexOf(t.date) >= 0);
+  const planned = weekTasks.reduce((s, t) => s + t.dur, 0);
+  const doneWeek = weekTasks.filter(t => t.done).length;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const leftMin = state.tasks
+    .filter(t => t.date === today && !t.done && minutesOf(t) + t.dur > nowMin)
+    .reduce((s, t) => s + t.dur, 0);
+  const free = Math.max(0, DAY_END * 60 - Math.max(nowMin, DAY_START * 60) - leftMin);
 
-  statsBox.innerHTML =
-    '<div class="lt-stat"><div class="t">Отмечено сегодня</div><div class="v">' + doneToday + ' из ' + state.habits.length + '</div><div class="s">' + (state.habits.length ? 'привычек в списке' : 'добавьте первую') + '</div></div>' +
-    '<div class="lt-stat"><div class="t">Полезные</div><div class="v">' + good + '</div><div class="s">формируем и держим</div></div>' +
-    '<div class="lt-stat"><div class="t">Вредные</div><div class="v">' + bad + '</div><div class="s">дни без них — победа</div></div>' +
-    '<div class="lt-stat"><div class="t">Лучшая серия</div><div class="v">' + (best && best.streak ? best.streak + ' ' + plural(best.streak, 'день', 'дня', 'дней') : '—') + '</div><div class="s">' + esc(best && best.streak ? best.name : 'начните отмечать') + '</div></div>';
+  box.innerHTML =
+    '<div class="lv-card lv-kpi"><div class="t">' + (lifeDay === today ? 'Сегодня' : 'Выбранный день') + '</div>' +
+      '<div class="v">' + doneToday + ' из ' + totalHabits + '</div>' +
+      '<div class="s">' + (totalHabits ? Math.round(doneToday / totalHabits * 100) + '% привычек' : 'добавьте привычку') + '</div></div>' +
+    '<div class="lv-card lv-kpi b"><div class="t">Лучшая серия</div>' +
+      '<div class="v">' + (best.streak ? best.streak + ' ' + plural(best.streak, 'день', 'дня', 'дней') : '—') + '</div>' +
+      '<div class="s">' + esc(best.streak ? best.name : 'начните отмечать') + '</div></div>' +
+    '<div class="lv-card lv-kpi c"><div class="t">На неделе</div>' +
+      '<div class="v">' + (planned ? fmtDur(planned) : '—') + '</div>' +
+      '<div class="s">' + weekTasks.length + ' ' + plural(weekTasks.length, 'задача', 'задачи', 'задач') + ' · ' + (weekTasks.length ? Math.round(doneWeek / weekTasks.length * 100) + '% закрыто' : 'свободно') + '</div></div>' +
+    '<div class="lv-card lv-kpi d"><div class="t">Свободно сегодня</div>' +
+      '<div class="v">' + (free ? fmtDur(free) : '—') + '</div>' +
+      '<div class="s">до ' + DAY_END + ':00 с учётом планов</div></div>';
+}
+
+/* ---------- календарь привычек ---------- */
+function renderHabitCal() {
+  const box = $('#habitCal'), meta = $('#calMeta');
+  if (!box) return;
+  const base = parseDay(lifeDay);
+  const y = base.getFullYear(), m = base.getMonth();
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const prevDays = new Date(y, m, 0).getDate();
+  const today = todayISO(), total = state.habits.length;
+
+  let marks = 0, possible = 0;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const iso = isoDate(new Date(y, m, day));
+    if (iso > today) continue;
+    possible += total;
+    state.habits.forEach(h => { if (h.days[iso]) marks++; });
+  }
+  const pct = possible ? Math.round(marks / possible * 100) : 0;
+  if (meta) meta.textContent = MONTHS_SHORT[m] + ' · ' + (possible ? pct + '% отмечено' : 'нет отметок');
+
+  const cells = [];
+  for (let i = offset; i > 0; i--) cells.push({ off: true, n: prevDays - i + 1 });
+  for (let d = 1; d <= daysInMonth; d++) cells.push({ n: d, iso: isoDate(new Date(y, m, d)) });
+  let extra = 1;
+  while (cells.length % 7) cells.push({ off: true, n: extra++ });
+
+  box.innerHTML = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'].map(w => '<div class="wd">' + w + '</div>').join('') +
+    cells.map(c => {
+      if (c.off) return '<button type="button" class="off" disabled tabindex="-1">' + c.n + '</button>';
+      const count = state.habits.filter(h => h.days[c.iso]).length;
+      const ratio = total ? count / total : 0;
+      const lvl = !count ? '' : ratio >= 0.75 ? ' l3' : ratio >= 0.4 ? ' l2' : ' l1';
+      const cls = (lvl + (c.iso === today ? ' today' : '') + (c.iso === lifeDay ? ' sel' : '') + (c.iso > today ? ' future' : '')).trim();
+      return '<button type="button" class="' + cls + '" data-cal="' + c.iso + '" title="' + c.n + ' ' + MONTHS_SHORT[m] + ': ' + count + ' из ' + total + '">' + c.n + '</button>';
+    }).join('');
+}
+
+/* ---------- график по неделям ---------- */
+function renderLifeBars() {
+  const box = $('#lifeBars'), meta = $('#barsMeta');
+  if (!box) return;
+  const total = state.habits.length;
+  const end = startOfWeek(parseDay(lifeDay));
+  const weeks = [];
+  for (let i = 7; i >= 0; i--) {
+    const ws = shiftDays(end, -7 * i);
+    const isos = Array.from({ length: 7 }, (_, k) => isoDate(shiftDays(ws, k)));
+    let marks = 0;
+    state.habits.forEach(h => { isos.forEach(d => { if (h.days[d]) marks++; }); });
+    weeks.push({ pct: total ? Math.round(marks / (total * 7) * 100) : 0, ws, now: i === 0 });
+  }
+  const avg = Math.round(weeks.reduce((s, w) => s + w.pct, 0) / weeks.length);
+  if (meta) meta.textContent = '8 недель · среднее ' + avg + '%';
+  box.innerHTML = weeks.map(w =>
+    '<div class="lb' + (w.now ? ' now' : '') + '" title="неделя ' + w.ws.getDate() + ' ' + MONTHS_SHORT[w.ws.getMonth()] + ': ' + w.pct + '%">' +
+      '<div class="fill" style="height:' + Math.max(3, w.pct) + '%"></div>' +
+      '<div class="lbl">' + w.ws.getDate() + '.' + pad2(w.ws.getMonth() + 1) + '</div>' +
+    '</div>').join('');
+}
+
+/* ---------- список привычек ---------- */
+function renderHabits() {
+  const list = $('#habitList'), label = $('#habitWeekLabel');
+  if (!list) return;
+  const isos = weekOf(lifeDay);
+  const ws = parseDay(isos[0]), we = parseDay(isos[6]);
+  if (label) label.textContent = 'неделя ' + ws.getDate() + '–' + we.getDate() + ' ' + MONTHS_SHORT[we.getMonth()];
 
   if (!state.habits.length) {
-    list.innerHTML = '<div class="lt-empty"><b>Пока пусто.</b> Добавьте полезную привычку — например, «зарядка 15 минут» — или вредную, чтобы считать дни без неё. Отмечайте выполненное прямо в строке привычки.</div>';
+    list.innerHTML = '<div class="lv-empty"><b>Пока пусто.</b> Добавьте полезную привычку — например, «зарядка 15 минут» — или вредную, чтобы считать дни без неё. Отмечайте дни прямо в строке.</div>';
     return;
   }
 
-  const week = Array.from({ length: 7 }, (_, i) => {
-    const iso = isoOffset(-6 + i);
-    const d = parseDay(iso);
-    return { iso, d, day: d.getDate(), wd: WEEKDAYS_SHORT[d.getDay()], today: iso === today };
-  });
-
+  const today = todayISO();
   list.innerHTML = state.habits.map((h, i) => {
     const streak = habitStreak(h);
-    const wc = habitWeekCount(h);
-    const cells = week.map(w =>
-      '<button class="hb-day' + (h.days[w.iso] ? ' done' : '') + (w.today ? ' today' : '') + '" type="button" data-hi="' + i + '" data-hb="' + w.iso + '" aria-pressed="' + (h.days[w.iso] ? 'true' : 'false') + '" title="' + w.day + ' ' + MONTHS_SHORT[w.d.getMonth()] + ', ' + w.wd + ' — отметить">' +
-        '<b>' + w.day + '</b><span>' + w.wd + '</span></button>').join('');
-    return '<div class="hb-row">' +
-      '<div class="hb-main"><div class="hb-name">' + esc(h.name || 'Привычка') +
-        '<span class="hb-type ' + (h.kind === 'bad' ? 'bad' : 'good') + '">' + (h.kind === 'bad' ? 'вредная' : 'полезная') + '</span></div>' +
-        '<div class="hb-sub">' + (streak ? 'серия ' + streak + ' ' + plural(streak, 'день', 'дня', 'дней') : 'серия 0') + ' · за 7 дней ' + wc + '/7</div></div>' +
-      '<div class="hb-week">' + cells + '</div>' +
-      '<button class="icon-btn no-print" type="button" data-hdel="' + i + '" title="Удалить привычку" aria-label="Удалить привычку">&times;</button>' +
+    const wc = weekCount(h, isos);
+    const goal = Math.max(0, Math.min(7, Math.round(num(h.goal, 0))));
+    const pct = goal ? Math.min(100, Math.round(wc / goal * 100)) : 0;
+    const cells = isos.map(iso => {
+      const d = parseDay(iso);
+      return '<button type="button" class="' + (h.days[iso] ? 'on' : '') + (iso === today ? ' today' : '') + '"' +
+        ' data-hi="' + i + '" data-hb="' + iso + '" aria-pressed="' + (h.days[iso] ? 'true' : 'false') + '"' +
+        ' title="' + d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()] + ', ' + WEEKDAYS_SHORT[d.getDay()] + ' — отметить">' +
+        d.getDate() + '<span>' + WEEKDAYS_SHORT[d.getDay()] + '</span></button>';
+    }).join('');
+    return '<div class="lv-hb">' +
+      '<div class="nm"><b>' + esc(h.name || 'Привычка') +
+        '<span class="lv-pill ' + (h.kind === 'bad' ? 'bad' : 'good') + '">' + (h.kind === 'bad' ? 'вредная' : 'полезная') + '</span></b>' +
+        '<small>' + (streak ? 'серия ' + streak + ' ' + plural(streak, 'день', 'дня', 'дней') : 'серия 0') + ' · ' + wc + ' из ' + (goal || 7) + ' за неделю</small></div>' +
+      '<div class="lv-goal"><div class="bar"><i class="' + (h.kind === 'bad' ? 'bad' : '') + '" style="width:' + pct + '%"></i></div>' +
+        '<select data-hgoal="' + i + '" aria-label="Цель привычки на неделю">' + goalOptions(goal) + '</select></div>' +
+      '<div class="lv-days">' + cells + '</div>' +
+      '<button class="lv-x no-print" type="button" data-hdel="' + i + '" title="Удалить привычку" aria-label="Удалить привычку">&times;</button>' +
     '</div>';
   }).join('');
 }
 
-const taskSort = (a, b) => (a.date === b.date
-  ? (a.time === b.time ? 0 : (a.time < b.time ? -1 : 1))
-  : (a.date < b.date ? -1 : 1));
+/* ---------- неделя по часам ---------- */
+function renderHourGrid() {
+  const box = $('#hourGrid'), meta = $('#hoursMeta');
+  if (!box) return;
+  const isos = weekOf(lifeDay), today = todayISO();
+  const weekTasks = state.tasks.filter(t => isos.indexOf(t.date) >= 0);
+  if (meta) meta.textContent = DAY_START + ':00–' + DAY_END + ':00 · ' + weekTasks.length + ' ' + plural(weekTasks.length, 'задача', 'задачи', 'задач');
 
+  let html = '<div></div>' + isos.map(iso => {
+    const d = parseDay(iso);
+    return '<div class="top">' + WEEKDAYS_SHORT[d.getDay()] + '<b>' + d.getDate() + '</b></div>';
+  }).join('');
+
+  html += '<div class="hh-labels">' +
+    Array.from({ length: DAY_END - DAY_START + 1 }, (_, k) =>
+      '<span style="top:' + (k * HOUR_PX) + 'px">' + (DAY_START + k) + '</span>').join('') + '</div>';
+
+  html += isos.map(iso => {
+    const items = state.tasks.filter(t => t.date === iso).sort((a, b) => minutesOf(a) - minutesOf(b));
+    const lanes = [], laneOf = new Map();
+    items.forEach(t => {
+      const s = minutesOf(t), e = s + t.dur;
+      let lane = lanes.findIndex(end => end <= s);
+      if (lane < 0) { lane = lanes.length; lanes.push(e); } else { lanes[lane] = e; }
+      laneOf.set(t.id, lane);
+    });
+    const laneCount = Math.max(1, lanes.length);
+    const blocks = items.map(t => {
+      const s = minutesOf(t), e = s + t.dur;
+      if (s >= DAY_END * 60 || e <= DAY_START * 60) return '';
+      const top = (Math.max(s, DAY_START * 60) - DAY_START * 60) / 60 * HOUR_PX;
+      const h = Math.max(13, (Math.min(e, DAY_END * 60) - Math.max(s, DAY_START * 60)) / 60 * HOUR_PX);
+      const w = 100 / laneCount, left = (laneOf.get(t.id) || 0) * w;
+      const conflict = items.some(x => x !== t && s < minutesOf(x) + x.dur && minutesOf(x) < e);
+      const short = h < 30;
+      return '<button type="button" class="ev ' + catOf(t.cat).id + (t.done ? ' done' : '') + (conflict ? ' conflict' : '') + (short ? ' short' : '') + '"' +
+        ' style="top:' + top.toFixed(1) + 'px;height:' + h.toFixed(1) + 'px;left:calc(' + left + '% + 2px);width:calc(' + w + '% - 4px)"' +
+        ' data-jump="' + esc(t.id) + '" title="' + esc(t.title) + ' · ' + fmtDur(t.dur) + (conflict ? ' · пересекается с другой задачей' : '') + '">' +
+        '<b>' + esc(t.time) + '</b><span class="tt">' + esc(t.title) + '</span></button>';
+    }).join('');
+    return '<div class="col' + (iso === today ? ' today' : '') + '">' + blocks + '</div>';
+  }).join('');
+
+  box.innerHTML = html;
+}
+
+/* ---------- дневник ---------- */
+function journalEntry(iso, create) {
+  if (!state.journal || typeof state.journal !== 'object') state.journal = {};
+  let j = state.journal[iso];
+  if (!j && create) { j = { mood: '', note: '', tags: [] }; state.journal[iso] = j; }
+  return j || null;
+}
+
+function renderJournal() {
+  const moodBox = $('#journalMood'), noteEl = $('#journalNote'), tagsBox = $('#journalTags'), dateEl = $('#journalDate');
+  if (!moodBox || !noteEl || !tagsBox) return;
+  const j = journalEntry(lifeDay, false) || { mood: '', note: '', tags: [] };
+  if (dateEl) dateEl.textContent = dayTitle(lifeDay);
+  moodBox.innerHTML = MOODS.map(m =>
+    '<button type="button" data-mood="' + m.id + '" class="' + (j.mood === m.id ? 'on' : '') + '" aria-pressed="' + (j.mood === m.id) + '">' + m.name + '</button>').join('');
+  if (document.activeElement !== noteEl) noteEl.value = j.note || '';
+  tagsBox.innerHTML = (j.tags || []).map((t, i) =>
+    '<span class="lv-tag">' + esc(t) + '<button type="button" data-tagdel="' + i + '" aria-label="Удалить тег">&times;</button></span>').join('');
+}
+
+$('#journalMood').addEventListener('click', e => {
+  const b = e.target.closest('[data-mood]');
+  if (!b) return;
+  const j = journalEntry(lifeDay, true);
+  j.mood = j.mood === b.dataset.mood ? '' : b.dataset.mood;
+  save();
+  renderJournal();
+});
+
+$('#journalNote').addEventListener('input', e => {
+  const j = journalEntry(lifeDay, true);
+  j.note = String(e.target.value || '').slice(0, 400);
+  save();
+});
+
+$('#journalTags').addEventListener('click', e => {
+  const b = e.target.closest('[data-tagdel]');
+  if (!b) return;
+  const j = journalEntry(lifeDay, true);
+  j.tags.splice(+b.dataset.tagdel, 1);
+  save();
+  renderJournal();
+});
+
+$('#journalTagInput').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const val = e.target.value.trim().replace(/\s+/g, ' ').slice(0, 24);
+  if (!val) return;
+  const j = journalEntry(lifeDay, true);
+  if ((j.tags || []).length >= 8) { toast('Максимум 8 тегов на день'); return; }
+  if (j.tags.indexOf(val) < 0) j.tags.push(val);
+  e.target.value = '';
+  save();
+  renderJournal();
+});
+
+/* ---------- фильтры задач ---------- */
+function renderTaskFilters() {
+  const box = $('#taskFilters');
+  if (!box) return;
+  const today = todayISO(), isos = weekOf(lifeDay);
+  const counts = {
+    all: state.tasks.length,
+    today: state.tasks.filter(t => t.date === today).length,
+    week: state.tasks.filter(t => isos.indexOf(t.date) >= 0).length,
+    high: state.tasks.filter(t => t.pri === 'high' && !t.done).length,
+    done: state.tasks.filter(t => t.done).length
+  };
+  const defs = [['all', 'Все'], ['today', 'Сегодня'], ['week', 'Неделя'], ['high', 'Важные'], ['done', 'Выполненные']];
+  box.innerHTML = defs.map(d =>
+      '<button type="button" class="lv-filter' + (lifeFilter === d[0] ? ' on' : '') + '" data-filter="' + d[0] + '">' +
+      d[1] + '<b>' + counts[d[0]] + '</b></button>').join('') +
+    '<select class="lv-filter" id="catFilter" aria-label="Категория задач">' +
+      '<option value="all">Все категории</option>' +
+      TASK_CATS.map(c => '<option value="' + c.id + '"' + (lifeCat === c.id ? ' selected' : '') + '>' + c.name + '</option>').join('') +
+    '</select>';
+}
+
+$('#taskFilters').addEventListener('click', e => {
+  const b = e.target.closest('[data-filter]');
+  if (!b) return;
+  lifeFilter = b.dataset.filter;
+  renderTaskFilters();
+  renderTasks();
+});
+$('#taskFilters').addEventListener('change', e => {
+  if (e.target.id !== 'catFilter') return;
+  lifeCat = e.target.value;
+  renderTasks();
+});
+
+/* ---------- задачи ---------- */
 function taskRow(t) {
-  return '<div class="task' + (t.done ? ' done' : '') + '">' +
-    '<span class="task-time">' + esc(t.time || '—') + '</span>' +
-    '<div class="task-main"><div class="task-name">' + esc(t.title || 'Задача') +
-      (t.pri === 'high' ? '<span class="task-pri">важно</span>' : '') + '</div>' +
-      '<div class="task-sub">' + fmtDur(t.dur) + (t.done ? ' · выполнено' : '') + '</div></div>' +
-    '<button class="task-done no-print" type="button" data-tdone="' + esc(t.id) + '" title="' + (t.done ? 'Снять отметку' : 'Отметить выполненной') + '" aria-label="' + (t.done ? 'Снять отметку' : 'Отметить выполненной') + '" aria-pressed="' + (t.done ? 'true' : 'false') + '">&#10003;</button>' +
-    '<button class="icon-btn no-print" type="button" data-tdel="' + esc(t.id) + '" title="Удалить задачу" aria-label="Удалить задачу">&times;</button>' +
+  return '<div class="lv-task' + (t.done ? ' done' : '') + '" data-task="' + esc(t.id) + '">' +
+    '<span class="lv-task-time">' + esc(t.time || '—') + '</span>' +
+    '<div class="lv-task-main"><div class="lv-task-name">' + esc(t.title || 'Задача') + '</div>' +
+      '<div class="lv-task-sub"><span class="lv-chip">' + esc(catOf(t.cat).name) + '</span>' +
+        (t.pri === 'high' ? '<span class="lv-chip high">важно</span>' : '') +
+        (t.repeat !== 'none' ? '<span class="lv-chip rep">' + REPEAT_NAME[t.repeat] + '</span>' : '') +
+        '<span>' + fmtDur(t.dur) + (t.done ? ' · выполнено' : '') + '</span></div></div>' +
+    '<button type="button" class="lv-task-done no-print" data-tdone="' + esc(t.id) + '" aria-pressed="' + (t.done ? 'true' : 'false') + '"' +
+      ' title="' + (t.done ? 'Снять отметку' : 'Отметить выполненной') + '" aria-label="' + (t.done ? 'Снять отметку' : 'Отметить выполненной') + '">&#10003;</button>' +
+    '<button type="button" class="lv-x no-print" data-tdel="' + esc(t.id) + '" title="Удалить задачу" aria-label="Удалить задачу">&times;</button>' +
   '</div>';
 }
 
-function dayTitle(iso) {
-  const d = parseDay(iso);
-  const base = d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()];
-  if (iso === todayISO()) return 'Сегодня · ' + base;
-  if (iso === isoOffset(1)) return 'Завтра · ' + base;
-  return WEEKDAYS_FULL[d.getDay()] + ' · ' + base;
-}
-
 function renderTasks() {
-  const strip = $('#weekStrip'), stats = $('#timeStats'), list = $('#taskList');
-  if (!strip || !stats || !list) return;
-  const today = todayISO();
-  const ws = startOfWeek(new Date());
-  const dayMinutes = {}, dayCount = {};
-  state.tasks.forEach(t => {
-    if (!t.date) return;
-    dayMinutes[t.date] = (dayMinutes[t.date] || 0) + t.dur;
-    dayCount[t.date] = (dayCount[t.date] || 0) + 1;
+  const list = $('#taskList'), meta = $('#taskMeta');
+  if (!list) return;
+  const today = todayISO(), isos = weekOf(lifeDay);
+  const items = state.tasks.filter(t => {
+    if (lifeCat !== 'all' && (t.cat || 'other') !== lifeCat) return false;
+    if (lifeFilter === 'done') return t.done;
+    if (lifeFilter === 'today') return t.date === today;
+    if (lifeFilter === 'week') return isos.indexOf(t.date) >= 0;
+    if (lifeFilter === 'high') return t.pri === 'high' && !t.done;
+    return true;
   });
-
-  strip.innerHTML = Array.from({ length: 7 }, (_, i) => {
-    const d = shiftDays(ws, i), iso = isoDate(d);
-    const min = dayMinutes[iso] || 0, n = dayCount[iso] || 0;
-    const cls = (iso === today ? ' today' : '') + (min > 480 ? ' over' : '');
-    return '<button class="ts-day' + cls + '" type="button" data-day="' + iso + '" title="' + WEEKDAYS_FULL[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()] + ' — добавить задачу">' +
-      '<span class="ts-d">' + WEEKDAYS_SHORT[d.getDay()] + '</span>' +
-      '<span class="ts-h">' + (min ? fmtDurShort(min) : '—') + '</span>' +
-      '<span class="ts-n">' + (n ? n + ' ' + plural(n, 'дело', 'дела', 'дел') : '—') + '</span>' +
-    '</button>';
-  }).join('');
-
-  const weekIsos = Array.from({ length: 7 }, (_, i) => isoDate(shiftDays(ws, i)));
-  const weekTasks = state.tasks.filter(t => weekIsos.indexOf(t.date) >= 0);
-  const planned = weekTasks.reduce((s, t) => s + t.dur, 0);
-  const doneTasks = weekTasks.filter(t => t.done);
-  const doneMin = doneTasks.reduce((s, t) => s + t.dur, 0);
-  const openHigh = weekTasks.filter(t => t.pri === 'high' && !t.done).length;
-  let peak = { iso: '', min: 0 };
-  weekIsos.forEach(iso => { const m = dayMinutes[iso] || 0; if (m > peak.min) peak = { iso, min: m }; });
-  const peakDay = peak.iso ? parseDay(peak.iso) : null;
-
-  stats.innerHTML =
-    '<div class="lt-stat"><div class="t">На неделе</div><div class="v">' + (planned ? fmtDur(planned) : '—') + '</div><div class="s">' + weekTasks.length + ' ' + plural(weekTasks.length, 'задача', 'задачи', 'задач') + '</div></div>' +
-    '<div class="lt-stat"><div class="t">Выполнено</div><div class="v">' + (weekTasks.length ? Math.round(doneTasks.length / weekTasks.length * 100) + '%' : '—') + '</div><div class="s">' + doneTasks.length + ' из ' + weekTasks.length + (doneMin ? ' · ' + fmtDur(doneMin) : '') + '</div></div>' +
-    '<div class="lt-stat"><div class="t">Важные</div><div class="v">' + openHigh + '</div><div class="s">' + (openHigh ? 'ещё не закрыто' : 'всё под контролем') + '</div></div>' +
-    '<div class="lt-stat"><div class="t">Максимум дня</div><div class="v">' + (peak.min ? fmtDurShort(peak.min) : '—') + '</div><div class="s">' + (peakDay ? WEEKDAYS_SHORT[peakDay.getDay()] + ', ' + peakDay.getDate() + ' ' + MONTHS_SHORT[peakDay.getMonth()] : 'задач пока нет') + '</div></div>';
+  if (meta) meta.textContent = items.length + ' ' + plural(items.length, 'задача', 'задачи', 'задач') + ' · ' + fmtDur(items.reduce((s, t) => s + t.dur, 0));
 
   const groups = [];
-  const overdue = state.tasks.filter(t => !t.done && t.date && t.date < today).sort(taskSort);
-  if (overdue.length) groups.push({ key: 'over', title: 'Просрочено', items: overdue });
-  const map = new Map();
-  state.tasks.filter(t => t.date >= today).sort(taskSort).slice(0, 100).forEach(t => {
-    if (!map.has(t.date)) map.set(t.date, []);
-    map.get(t.date).push(t);
-  });
-  Array.from(map.keys()).sort().forEach(k => groups.push({ key: k, title: dayTitle(k), items: map.get(k) }));
+  if (lifeFilter === 'done') {
+    if (items.length) groups.push({ title: 'Выполненные задачи', items: items.slice().sort(taskSort) });
+  } else {
+    const overdue = items.filter(t => !t.done && t.date && t.date < today).sort(taskSort);
+    if (overdue.length) groups.push({ title: 'Просрочено', items: overdue });
+    const map = new Map();
+    items.filter(t => t.date >= today).sort(taskSort).forEach(t => {
+      if (!map.has(t.date)) map.set(t.date, []);
+      map.get(t.date).push(t);
+    });
+    Array.from(map.keys()).sort().forEach(k => groups.push({ title: dayTitle(k), items: map.get(k) }));
+  }
 
   if (!groups.length) {
-    list.innerHTML = '<div class="lt-empty"><b>План пуст.</b> Добавьте задачу: название, дату, время и длительность. День недели сверху подскажет, где уже много дел.</div>';
+    const msg = lifeFilter === 'done' ? '<b>Пока ничего не выполнено.</b> Отмечайте задачи галочкой — они соберутся здесь.'
+      : lifeCat !== 'all' ? '<b>В категории «' + esc(catOf(lifeCat).name) + '» пусто.</b> Смените фильтр или категорию.'
+      : lifeFilter === 'high' ? '<b>Важных задач нет.</b> Поставьте приоритет «Важная» при добавлении.'
+      : '<b>План пуст.</b> Добавьте задачу: название, дата, время и длительность. Сетка по часам покажет нагрузку.';
+    list.innerHTML = '<div class="lv-empty">' + msg + '</div>';
     return;
   }
 
   let rows = 0;
   list.innerHTML = groups.map(g => {
-    if (rows >= 100) return '';
-    const items = g.items.slice(0, 100 - rows);
-    rows += items.length;
+    if (rows >= 120) return '';
+    const part = g.items.slice(0, 120 - rows);
+    rows += part.length;
     const total = g.items.reduce((s, t) => s + t.dur, 0);
-    return '<div class="task-group">' +
-      '<div class="task-group-h"><span>' + esc(g.title) + '</span><b>' + g.items.length + ' ' + plural(g.items.length, 'дело', 'дела', 'дел') + ' · ' + fmtDur(total) + '</b></div>' +
-      items.map(taskRow).join('') +
-    '</div>';
+    return '<div class="lv-group"><div class="lv-group-h"><span>' + esc(g.title) + '</span><b>' +
+      g.items.length + ' ' + plural(g.items.length, 'дело', 'дела', 'дел') + ' · ' + fmtDur(total) + '</b></div>' +
+      part.map(taskRow).join('') + '</div>';
   }).join('');
 }
 
-function defaultTaskTime() {
-  const d = new Date();
-  const m = Math.ceil((d.getHours() * 60 + d.getMinutes() + 1) / 15) * 15;
-  if (m >= 1440) return '09:00';
-  return pad2(Math.floor(m / 60)) + ':' + pad2(m % 60);
-}
+/* ---------- обработчики ---------- */
+$('#lifeToday').addEventListener('click', () => {
+  lifeDay = todayISO();
+  renderLife();
+});
 
-$('#lifeTabs').addEventListener('click', e => {
-  const b = e.target.closest('[data-lt]');
+$('#lifePrint').addEventListener('click', () => window.print());
+
+$('#habitCal').addEventListener('click', e => {
+  const b = e.target.closest('[data-cal]');
   if (!b) return;
-  setLifeTab(b.dataset.lt);
+  lifeDay = b.dataset.cal;
+  renderLife();
 });
 
 $('#habitForm').addEventListener('submit', e => {
@@ -2369,12 +2981,24 @@ $('#habitForm').addEventListener('submit', e => {
     id: 'h' + Date.now().toString(36) + Math.random().toString(16).slice(2, 5),
     name,
     kind: $('#habitKind').value === 'bad' ? 'bad' : 'good',
+    goal: Math.max(0, Math.min(7, Math.round(num($('#habitGoal').value, 5)))),
     days: {}
   });
   nameEl.value = '';
   save();
-  renderHabits();
+  renderLife();
   toast('Привычка добавлена');
+});
+
+$('#habitList').addEventListener('change', e => {
+  const sel = e.target.closest('[data-hgoal]');
+  if (!sel) return;
+  const h = state.habits[+sel.dataset.hgoal];
+  if (!h) return;
+  h.goal = Math.max(0, Math.min(7, Math.round(num(sel.value, 0))));
+  save();
+  renderHabits();
+  renderLifeKpi();
 });
 
 $('#habitList').addEventListener('click', e => {
@@ -2386,7 +3010,7 @@ $('#habitList').addEventListener('click', e => {
     if (!confirm('Удалить привычку «' + h.name + '» и всю историю отметок?')) return;
     state.habits.splice(i, 1);
     save();
-    renderHabits();
+    renderLife();
     toast('Привычка удалена');
     return;
   }
@@ -2397,14 +3021,23 @@ $('#habitList').addEventListener('click', e => {
   const iso = day.dataset.hb;
   if (h.days[iso]) delete h.days[iso]; else h.days[iso] = 1;
   save();
+  renderHabitCal();
+  renderLifeKpi();
+  renderLifeBars();
   renderHabits();
 });
 
-$('#weekStrip').addEventListener('click', e => {
-  const b = e.target.closest('[data-day]');
+$('#hourGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-jump]');
   if (!b) return;
-  $('#taskDate').value = b.dataset.day;
-  $('#taskTitle').focus();
+  lifeFilter = 'all';
+  renderTaskFilters();
+  renderTasks();
+  const row = document.querySelector('[data-task="' + b.dataset.jump + '"]');
+  if (!row) return;
+  row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  row.classList.add('flash');
+  setTimeout(() => row.classList.remove('flash'), 1400);
 });
 
 $('#taskForm').addEventListener('submit', e => {
@@ -2418,13 +3051,18 @@ $('#taskForm').addEventListener('submit', e => {
   const time = /^\d{2}:\d{2}$/.test(timeEl.value) ? timeEl.value : '09:00';
   const dur = Math.max(5, Math.min(720, Math.round(num($('#taskDur').value, 60))));
   const pri = $('#taskPri').value === 'high' ? 'high' : 'normal';
+  const cat = $('#taskCat').value || 'other';
+  const repeat = REPEAT_NAME.hasOwnProperty($('#taskRepeat').value) ? $('#taskRepeat').value : 'none';
   state.tasks.push({
     id: 't' + Date.now().toString(36) + Math.random().toString(16).slice(2, 5),
-    title, date, time, dur, pri, done: false
+    title, date, time, dur, pri, cat, repeat, done: false
   });
   titleEl.value = '';
   save();
+  renderTaskFilters();
   renderTasks();
+  renderHourGrid();
+  renderLifeKpi();
   toast('Задача добавлена на ' + dayTitle(date).toLowerCase());
 });
 
@@ -2434,8 +3072,22 @@ $('#taskList').addEventListener('click', e => {
     const t = state.tasks.find(x => x.id === done.dataset.tdone);
     if (!t) return;
     t.done = !t.done;
+    if (t.done && t.repeat && t.repeat !== 'none') {
+      const nextDate = nextRepeatDate(t.date, t.repeat);
+      const exists = state.tasks.some(x => x.repeat && x.title === t.title && x.date === nextDate && x.time === t.time);
+      if (nextDate && !exists) {
+        state.tasks.push({
+          id: 't' + Date.now().toString(36) + Math.random().toString(16).slice(2, 5),
+          title: t.title, date: nextDate, time: t.time, dur: t.dur, pri: t.pri, cat: t.cat, repeat: t.repeat, done: false
+        });
+        toast('Следующая: ' + dayTitle(nextDate).toLowerCase());
+      }
+    }
     save();
     renderTasks();
+    renderHourGrid();
+    renderLifeKpi();
+    renderTaskFilters();
     return;
   }
   const del = e.target.closest('[data-tdel]');
@@ -2445,6 +3097,9 @@ $('#taskList').addEventListener('click', e => {
   state.tasks.splice(i, 1);
   save();
   renderTasks();
+  renderHourGrid();
+  renderLifeKpi();
+  renderTaskFilters();
   toast('Задача удалена');
 });
 
@@ -2454,11 +3109,34 @@ $('#clearDone').addEventListener('click', () => {
   state.tasks = state.tasks.filter(t => !t.done);
   save();
   renderTasks();
+  renderHourGrid();
+  renderLifeKpi();
+  renderTaskFilters();
   toast('Убрано выполненных: ' + n);
 });
 
+function renderLife() {
+  renderLifeCaption();
+  renderLifeKpi();
+  renderHabitCal();
+  renderLifeBars();
+  renderHabits();
+  renderHourGrid();
+  renderTaskFilters();
+  renderTasks();
+  renderJournal();
+}
+
+/* стартовые значения форм */
+$('#taskCat').innerHTML = TASK_CATS.map(c => '<option value="' + c.id + '">' + c.name + '</option>').join('');
 $('#taskDate').value = todayISO();
-$('#taskTime').value = defaultTaskTime();
+$('#taskTime').value = (function () {
+  const d = new Date();
+  const m = Math.ceil((d.getHours() * 60 + d.getMinutes() + 1) / 15) * 15;
+  if (m >= 1440) return '09:00';
+  return pad2(Math.floor(m / 60)) + ':' + pad2(m % 60);
+})();
+applyHash();
 
 /* =======================================================================
    СБОРКА
@@ -2476,8 +3154,7 @@ function renderAll(rebuildInputs) {
   if (rebuildInputs) { renderInputs(); renderMoney(); }
   else { updateInputTotals(); updateMoneyTotals(); }
   renderGoals();
-  renderHabits();
-  renderTasks();
+  renderLife();
   syncControls();
 }
 
@@ -3285,7 +3962,8 @@ function syncData() {
     invCash: state.invCash,
     invUpdatedAt: state.invUpdatedAt,
     habits: state.habits,
-    tasks: state.tasks
+    tasks: state.tasks,
+    journal: state.journal
   };
 }
 
